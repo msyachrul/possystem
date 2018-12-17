@@ -12,5 +12,15 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+    return redirect()->route('vendor.index');
 });
+
+Route::resource('/vendor', 'VendorController');
+Route::get('/api/vendor', 'VendorController@vendorApi')->name('vendor.api');
+
+Route::resource('/good_category', 'GoodCategoryController');
+Route::get('/api/good_category', 'GoodCategoryController@goodCategoryApi')->name('good_category.api');
+
+Route::resource('/good', 'GoodController');
+Route::get('/api/good', 'GoodController@goodApi')->name('good.api');
