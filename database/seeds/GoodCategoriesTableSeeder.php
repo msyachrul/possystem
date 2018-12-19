@@ -11,6 +11,6 @@ class GoodCategoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\GoodCategory::class, 10)->create();
+        factory(App\GoodCategory::class, 4)->create();
     }
 }

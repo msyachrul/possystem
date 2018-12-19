@@ -5,16 +5,16 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Vendor extends Model
+class BuyDetail extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['name', 'address', 'phone_number',];
+    protected $fillable = ['cost', 'buy_id', 'good_id'];
 
     protected $dates = ['deleted_at'];
 
-    public function goods()
+    public function buy()
     {
-    	return $this->hasMany('App\Good');
+    	return $this->belongsTo('App\Buy');
     }
 }

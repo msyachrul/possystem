@@ -5,9 +5,58 @@ namespace App\Http\Controllers;
 use App\Good;
 use DataTables;
 use Illuminate\Http\Request;
+use Faker\Factory as Faker;
 
 class GoodController extends Controller
 {
+    protected function barcodeGenerator($request)
+    {
+        $faker = Faker::create();
+
+        do {
+            $barcode = sprintf('%02d', $request->good_category_id);
+            $barcode .= sprintf('%04d', $faker->unique()->randomNumber(4));
+        } while (Good::where('barcode',$barcode)->first());
+
+        $newRequest = $request->all();
+        $newRequest['barcode'] = $barcode;
+
+        return $newRequest;
+    }
+
+    protected function column()
+    {
+        return [
+            'name' => 'required|string|max:50',
+            'price' => 'required|numeric|min:0',
+            'good_category_id' => 'required|integer',
+            'vendor_id' => 'required|integer',
+        ];
+    }
+
+    protected function categories()
+    {
+        $goodCategories = \App\GoodCategory::orderBy('name')->get();
+        $modelCategories = [];
+
+        foreach ($goodCategories as $goodCategory) {
+            $modelCategories[$goodCategory->id] = $goodCategory->name;
+        }
+
+        return $modelCategories;
+    }
+
+    protected function vendors()
+    {
+        $vendors = \App\Vendor::orderBy('name')->get();
+        $modelVendors = [];
+
+        foreach ($vendors as $vendor) {
+            $modelVendors[$vendor->id] = $vendor->name;
+        }
+
+        return $modelVendors;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -25,7 +74,11 @@ class GoodController extends Controller
      */
     public function create()
     {
-        //
+        return view('goods.form',[
+            'model' => new Good(),
+            'modelCategories' => $this->categories(),
+            'modelVendors' => $this->vendors(),
+        ]);
     }
 
     /**
@@ -36,7 +89,9 @@ class GoodController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, $this->column());
+
+        Good::create($this->barcodeGenerator($request));
     }
 
     /**
@@ -45,9 +100,11 @@ class GoodController extends Controller
      * @param  \App\Good  $good
      * @return \Illuminate\Http\Response
      */
-    public function show(Good $good)
+    public function show($id)
     {
-        //
+        $model = Good::findOrFail($id);
+
+        return view('goods.show',compact('model'));
     }
 
     /**
@@ -56,9 +113,13 @@ class GoodController extends Controller
      * @param  \App\Good  $good
      * @return \Illuminate\Http\Response
      */
-    public function edit(Good $good)
+    public function edit($id)
     {
-        //
+        return view('goods.form',[
+            'model' => Good::findOrFail($id),
+            'modelCategories' => $this->categories(),
+            'modelVendors' => $this->vendors(),
+        ]);
     }
 
     /**
@@ -68,9 +129,17 @@ class GoodController extends Controller
      * @param  \App\Good  $good
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Good $good)
+    public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, $this->column());
+
+        if ($request->good_category_id != Good::findOrFail($id)->good_category_id) {
+            Good::findOrFail($id)->update($this->barcodeGenerator($request));
+        }
+        else {
+            Good::findOrFail($id)->update($request->all());
+        }
+
     }
 
     /**
@@ -79,9 +148,9 @@ class GoodController extends Controller
      * @param  \App\Good  $good
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Good $good)
+    public function destroy($id)
     {
-        //
+        Good::findOrFail($id)->delete();
     }
 
     public function goodApi()
@@ -95,9 +164,6 @@ class GoodController extends Controller
             })
             ->addColumn('category_name', function ($model) {
                 return $model->goodCategory->name;
-            })
-            ->editColumn('cost_of_good', function ($model) {
-                return 'Rp '. number_format($model->cost_of_good);
             })
             ->editColumn('price', function ($model) {
                 return 'Rp '. number_format($model->price);

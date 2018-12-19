@@ -12,11 +12,8 @@ class VendorController extends Controller
     {
         return [
             'name' => 'required|string|max:50|unique:vendors,name,' . $id,
-            'id_card_number' => 'required|numeric|digits_between:0,30',
-            'owner' => 'required|string|max:50',
             'address' => 'required|string|max:255',
-            'phone_number' => 'required|numeric|digits_between:0,16',
-            'status' => 'required',
+            'phone_number' => 'required|numeric|digits_between:7,16',
         ];
     }
 
@@ -71,9 +68,6 @@ class VendorController extends Controller
 
         return DataTables::of($model)
             ->addIndexColumn()
-            ->editColumn('status', function ($model) {
-                return ($model->status) ? 'Aktif' : 'Tidak aktif';
-            })
             ->addColumn('action', function ($model) {
                 return view('templates._action', [
                     'model' => $model,

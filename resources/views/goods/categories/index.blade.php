@@ -5,7 +5,7 @@
 @section('content')
 	<div class="card">
 		<div class="card-header">
-			<h1 class="card-title">Data Kategori Barang</h1>
+			<h1 class="card-title">Master Kategori Barang</h1>
 		</div>
 		<div class="card-body">
 			<div class="table-responsive">
@@ -13,7 +13,7 @@
 					<thead>
 						<th width="1%">#</th>
 						<th>Nama</th>
-						<th class="text-center" width="5%"><button class="btn btn-primary btn-sm modal-show" data-href="{{ route('good_category.create') }}" data-title="Tambah Data Kategori"><i class="fa fa-plus"></i></button></th>
+						<th class="text-center" width="5%"><button class="btn btn-primary btn-sm modal-show" data-href="{{ route('good_category.create') }}" data-title="Tambah Master Kategori"><i class="fa fa-plus"></i></button></th>
 					</thead>
 				</table>
 			</div>

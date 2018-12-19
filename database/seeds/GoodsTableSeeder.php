@@ -11,6 +11,6 @@ class GoodsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Good::class, 30)->create();
+        factory(App\Good::class, 20)->create();
     }
 }

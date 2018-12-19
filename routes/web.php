@@ -24,3 +24,6 @@ Route::get('/api/good_category', 'GoodCategoryController@goodCategoryApi')->name
 
 Route::resource('/good', 'GoodController');
 Route::get('/api/good', 'GoodController@goodApi')->name('good.api');
+
+Route::resource('/buy', 'BuyController');
+Route::get('/api/buy', 'BuyController@buyApi')->name('buy.api');

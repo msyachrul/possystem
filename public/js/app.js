@@ -1,4 +1,10 @@
-$('body').on('submit', '.modal-body form', function (event) {
+function numberWithCommas(number) {
+    var parts = number.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+}
+
+$('body').on('submit', 'form', function (event) {
 	event.preventDefault();
 })
 
@@ -104,4 +110,45 @@ $('body').on('click', '.btn-destroy', function(event) {
 		}
 	});
 
+});
+
+$('#barcode').keypress(function(event) {
+	let form = $('form#buy'),
+		url = form.attr('action');
+
+	if (event.which == 13) {
+		let total = Number($('#total').attr('total')),
+			totalQty = Number($('#total-qty').attr('total-qty'));
+			barcode = $('#barcode').val();
+		$.ajax({
+			url: url,
+			dataType: 'html',
+			data: {
+				'barcode': barcode,
+			},
+			success: function (response) {
+				$('#table-buy tbody').append(response);
+				totalQty += Number($(response).data('qty'));
+				total += Number($(response).data('subtotal'));
+				$('#total').attr('total',total).text(numberWithCommas(total));
+				$('#total-qty').attr('total-qty',totalQty).text(numberWithCommas(totalQty));
+			},
+			error: function(xhr) {
+				swal({
+					'type': 'error',
+					'title': 'Error!',
+					'text': 'Barang tidak ditemukan!',
+				});
+			}
+		});
+		$('#barcode').val('');
+	}
+});
+$('body').on('click', '.btn-buy', function (event) {
+	let form = $('form#items');
+	console.log(form.serialize());
+	swal({
+		'type': 'success',
+		'title': 'Clicked!',
+	});
 });

@@ -5,7 +5,7 @@
 
 	<div class="form-group">
 		<label class="control-label">Nama</label>
-		{!! Form::text('name', null, ['class' => 'form-control', 'id' => 'name', 'placeholder' => 'Nama kategori']) !!}
+		{!! Form::text('name', null, ['class' => 'form-control', 'id' => 'name', 'placeholder' => 'Nama kategori', 'autocomplete' => 'off']) !!}
 	</div>	
 
 {!! Form::close() !!}

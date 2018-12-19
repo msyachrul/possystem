@@ -15,8 +15,9 @@ class CreateGoodsTable extends Migration
     {
         Schema::create('goods', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('barcode',9)->unique();
             $table->string('name',50);
-            $table->decimal('cost_of_good',16,0);
+            $table->decimal('cost',16,0);
             $table->decimal('price',16,0);
             $table->timestamps();
             $table->softDeletes();

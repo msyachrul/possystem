@@ -50,16 +50,16 @@
 			</li>
 			<br>
 			<li>
-				<a href="{{ route('vendor.index') }}"><i class="fa fa-address-card fa-custom fa-2x"></i><span class="nav-text">Vendor</span></a>
+				<a href="{{ route('good_category.index') }}"><i class="fa fa-list fa-custom fa-2x"></i><span class="nav-text">Kategori</span></a>
 			</li>
 			<li>
-				<a href="{{ route('good_category.index') }}"><i class="fa fa-list fa-custom fa-2x"></i><span class="nav-text">Kategori</span></a>
+				<a href="{{ route('vendor.index') }}"><i class="fa fa-address-card fa-custom fa-2x"></i><span class="nav-text">Vendor</span></a>
 			</li>
 			<li>
 				<a href="{{ route('good.index') }}"><i class="fa fa-shopping-bag fa-custom fa-2x"></i><span class="nav-text">Barang</span></a>
 			</li>
 			<li>
-				<a href="#"><i class="fa fa-calculator fa-custom fa-2x"></i><span class="nav-text">Perhitungan</span></a>
+				<a href="{{ route('buy.index') }}"><i class="fa fa-cart-plus fa-custom fa-2x"></i><span class="nav-text">Pembelian</span></a>
 			</li>
 			<li>
 

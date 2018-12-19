@@ -5,7 +5,7 @@
 @section('content')
 	<div class="card">
 		<div class="card-header">
-			<h1 class="card-title">Data Vendor</h1>
+			<h1 class="card-title">Master Vendor</h1>
 		</div>
 		<div class="card-body">
 			<div class="table-responsive">
@@ -13,10 +13,9 @@
 					<thead>
 						<th width="1%">#</th>
 						<th>Nama</th>
-						<th>Penanggung Jawab</th>
 						<th>Alamat</th>
-						<th>Status</th>
-						<th class="text-center" width="5%"><button class="btn btn-primary btn-sm modal-show" data-href="{{ route('vendor.create') }}" data-title="Tambah Data Vendor"><i class="fa fa-plus"></i></button></th>
+						<th>No Telepon</th>
+						<th class="text-center" width="5%"><button class="btn btn-primary btn-sm modal-show" data-href="{{ route('vendor.create') }}" data-title="Tambah Master Vendor"><i class="fa fa-plus"></i></button></th>
 					</thead>
 				</table>
 			</div>
@@ -33,14 +32,13 @@
 			ajax: "{{ route('vendor.api') }}",
 			columns: [
 				{data: "DT_RowIndex", name: 'id'},
-				{data: 'name', name: 'name'},
-				{data: 'owner', name: 'owner'},
+				{data: 'name', name: 'name'},				
 				{data: 'address', name: 'address'},
-				{data: 'status', name: 'status'},
+				{data: 'phone_number', name: 'phone_number'},
 				{data: 'action', name: 'action'},
 			],
 			columnDefs: [
-				{targets: 5, orderable: false},
+				{targets: 4, orderable: false},
 			],
 		});
 	</script>
