@@ -9,12 +9,12 @@ class Buy extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['file_number'];
+    protected $fillable = ['file_number','total'];
 
     protected $dates = ['deleted_at'];
 
     public function buyDetails()
     {
-    	return $this->hasMany('App\BuyDetail');
+    	return $this->hasMany('App\BuyDetail', 'buy_file_number', 'file_number');
     }
 }

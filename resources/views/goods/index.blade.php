@@ -39,7 +39,7 @@
 				{data: 'name', name: 'name'},
 				{data: 'category_name', name: 'category_name'},
 				{data: 'vendor_name', name: 'vendor_name'},
-				{data: 'cost_of_good', name: 'cost_of_good'},
+				{data: 'cost', name: 'cost'},
 				{data: 'price', name: 'price'},
 				{data: 'action', name: 'action'},
 			],

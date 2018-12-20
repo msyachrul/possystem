@@ -10,11 +10,11 @@
 	<div class="form-row">
 		<div class="form-group col-sm">
 			<label class="control-label">Kategori</label>
-			{!! Form::select('good_category_id', $modelCategories, null, ['class' => 'form-control', 'id' => 'good_category_id', 'placeholder' => 'Pilih kategori', 'autocomplete' => 'off']) !!}
+			{!! Form::select('good_category_id', $modelCategories, null, ['class' => 'form-control', 'id' => 'good_category_id', 'placeholder' => '-- Pilih kategori --', 'autocomplete' => 'off']) !!}
 		</div>
 		<div class="form-group col-sm">
 			<label class="control-label">Vendor</label>
-			{!! Form::select('vendor_id', $modelVendors, null, ['class' => 'form-control', 'id' => 'vendor_id', 'placeholder' => 'Pilih vendor', 'autocomplete' => 'off']) !!}
+			{!! Form::select('vendor_id', $modelVendors, null, ['class' => 'form-control', 'id' => 'vendor_id', 'placeholder' => '-- Pilih vendor --', 'autocomplete' => 'off']) !!}
 		</div>
 	</div>
 	<div class="form-row">
@@ -24,7 +24,7 @@
 				<div class="input-group-prepend">
 					<div class="input-group-text">Rp</div>
 				</div>
-				{!! Form::number('cost_of_good', null, ['class' => 'form-control', 'id' => 'cost_of_good', 'placeholder' => 'Harga pokok penjualan', 'autocomplete' => 'off']) !!}
+				{!! Form::number('cost', null, ['class' => 'form-control', 'id' => 'cost_of_good', 'placeholder' => 'Harga pokok penjualan', 'autocomplete' => 'off']) !!}
 			</div>
 		</div>
 		<div class="form-group col-sm">

@@ -103,7 +103,7 @@ class GoodCategoryController extends Controller
             ->addIndexColumn()
             ->addColumn('action', function ($model) {
                 return view('templates._action', [
-                    'model' => $model,
+                    'model' => $model->name,
                     'url_show' => route('good_category.show', $model->id),
                     'url_edit' => route('good_category.edit', $model->id),
                     'url_destroy' => route('good_category.destroy', $model->id),

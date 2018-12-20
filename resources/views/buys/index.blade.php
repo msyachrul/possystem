@@ -8,21 +8,9 @@
 			<h1 class="card-title">Pembelian</h1>
 		</div>
 		<div class="card-body">
-			<form id="buy" action="{{ route('buy.create') }}" method="GET">
-				<div class="form-group">
-					<input type="search" id="barcode" name="barcode" class="form-control" placeholder="Masukan barcode atau nama barang" autocomplete="off" autofocus>
-				</div>
-			</form>
-			<hr>
 			<div class="row">
 				<div class="col-sm text-right">
-					<h3 class="h3">Qty : <span id="total-qty" total-qty="">-</span></h3>
-				</div>
-				<div class="col-sm text-right">
-					<h3 class="h3">Total : Rp <span id="total" total="">-</span></h3>
-				</div>
-				<div class="col-sm text-right">
-					<button type="button" class="btn btn-outline-primary btn-buy" data-href="{{ route('buy.store') }}">Simpan Transaksi</button>
+					<a href="{{ route('buy.create')}}" class="btn btn-primary">Tambah Pembelian</a>
 				</div>
 			</div>
 			<hr>
@@ -30,11 +18,10 @@
 				<table id="table-buy" class="table table-bordered">
 					<thead>
 						<tr>
-							<th width="15%">Barcode</th>
-							<th>Nama Barang</th>
-							<th width="10%">Harga</th>
-							<th width="10%">Qty</th>
+							<th width="1%">#</th>
+							<th>No Berkas</th>
 							<th width="15%">Total</th>
+							<th width="5%"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -44,3 +31,20 @@
 		</div>
 	</div>
 @endsection
+
+@push('scripts')
+	<script>
+		$('#table-buy').DataTable({
+			responsive: true,
+			processing: true,
+			serverSide: true,
+			ajax: "{{ route('buy.api') }}",
+			columns: [
+				{data: 'DT_RowIndex', name: "id"},
+				{data: 'file_number', name: "file_number"},
+				{data: 'total', name: "total"},
+				{data: 'action', name: "action"},
+			]
+		});
+	</script>
+@endpush

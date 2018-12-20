@@ -13,7 +13,7 @@
 					<thead>
 						<th width="1%">#</th>
 						<th>Nama</th>
-						<th class="text-center" width="5%"><button class="btn btn-primary btn-sm modal-show" data-href="{{ route('good_category.create') }}" data-title="Tambah Master Kategori"><i class="fa fa-plus"></i></button></th>
+						<th class="text-center" width="5%"><button class="btn btn-primary btn-sm modal-show" data-href="{{ route('good_category.create') }}" data-title="Tambah Master Kategori" tabindex="1"><i class="fa fa-plus"></i></button></th>
 					</thead>
 				</table>
 			</div>

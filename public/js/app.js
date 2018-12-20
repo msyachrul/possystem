@@ -114,7 +114,9 @@ $('body').on('click', '.btn-destroy', function(event) {
 
 $('#barcode').keypress(function(event) {
 	let form = $('form#buy'),
-		url = form.attr('action');
+		url = form.attr('action'),
+		method = form.attr('method'),
+		csrf_token = $('meta[name="csrf-token"]').attr('content');
 
 	if (event.which == 13) {
 		let total = Number($('#total').attr('total')),
@@ -122,18 +124,35 @@ $('#barcode').keypress(function(event) {
 			barcode = $('#barcode').val();
 		$.ajax({
 			url: url,
+			type: method,
 			dataType: 'html',
 			data: {
+				'_token': csrf_token,
 				'barcode': barcode,
 			},
 			success: function (response) {
-				$('#table-buy tbody').append(response);
-				totalQty += Number($(response).data('qty'));
-				total += Number($(response).data('subtotal'));
+				me = $(response);
+				barcode = me.data('barcode');
+				totalQty += Number(me.data('qty'));
+				total += Number(me.data('subtotal'));
+
 				$('#total').attr('total',total).text(numberWithCommas(total));
 				$('#total-qty').attr('total-qty',totalQty).text(numberWithCommas(totalQty));
+
+				if ($('#' + barcode).length == 0) {
+					$('#table-good tbody').append(response);
+				}
+				else {
+					$('#' + barcode).attr({
+						'data-qty': Number($('#' + barcode).attr('data-qty')) + me.data('qty'),
+						'data-subtotal': Number($('#' + barcode).attr('data-subtotal')) + me.data('subtotal'),
+					});
+					$('#' + barcode + 'qty').text(Number($('#'+ barcode).attr('data-qty')));
+					$('#' + barcode + 'subtotal').text('Rp ' + numberWithCommas($('#' + barcode).attr('data-subtotal')));
+				}
+
 			},
-			error: function(xhr) {
+			error: function (xhr) {
 				swal({
 					'type': 'error',
 					'title': 'Error!',
@@ -145,10 +164,38 @@ $('#barcode').keypress(function(event) {
 	}
 });
 $('body').on('click', '.btn-buy', function (event) {
-	let form = $('form#items');
-	console.log(form.serialize());
-	swal({
-		'type': 'success',
-		'title': 'Clicked!',
+	let data = [],
+		url = $(this).data('href'),
+		csrf_token = $('meta[name="csrf-token"]').attr('content');
+
+	$('#table-good tbody tr').each(function () {
+		data.push($(this).data());
 	});
+
+	$.ajax({
+		url: url,
+		type: 'POST',
+		data: {
+			'_token': csrf_token,
+			'buys': data,
+		},
+		success: function (response) {
+			swal({
+				'type': 'success',
+				'title': 'Berhasil!',
+				'text': 'Transaksi pembelian berhasil!'
+			});
+
+		},
+		error: function (xhr) {
+			swal({
+				'type': 'error',
+				'title': 'Error!',
+				'text': 'Transaksi pembelian gagal!!',
+			});
+		},
+	});
+	$('#total-qty').attr('total-qty',0).text('-');
+	$('#total').attr('total',0).text('-');
+	$('#table-good tbody').html('');
 });

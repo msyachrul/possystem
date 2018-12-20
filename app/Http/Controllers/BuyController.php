@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Buy;
+use DataTables;
 use Illuminate\Http\Request;
 
 class BuyController extends Controller
@@ -17,12 +18,7 @@ class BuyController extends Controller
         return view('buys.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
+    public function goods(Request $request)
     {
         $barcode = [1, $request->barcode];
 
@@ -33,7 +29,17 @@ class BuyController extends Controller
         return view('buys.good',[
             'qty' => $barcode[0],
             'model' => \App\Good::where('barcode',$barcode[1])->firstOrFail(),
-        ]);
+        ]);   
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create(Request $request)
+    {
+        return view('buys.buy');
     }
 
     /**
@@ -44,7 +50,25 @@ class BuyController extends Controller
      */
     public function store(Request $request)
     {
-        // 
+        $no = 1;
+
+        do {
+            $fileNumber = date('dmy');
+            $fileNumber .= sprintf('%04d',$no++);
+        } while (Buy::where('file_number', $fileNumber)->first());
+
+        $model = Buy::create([
+            'file_number' => $fileNumber,
+            'total' => array_sum(array_column($request->buys, 'subtotal')),
+        ]);
+
+        foreach ($request->buys as $key => $buy) {
+            $model->buyDetails()->create([
+                'good_barcode' => $buy['barcode'],
+                'cost' => $buy['cost'],
+                'qty' => $buy['qty'],
+            ]);
+        }
     }
 
     /**
@@ -55,7 +79,8 @@ class BuyController extends Controller
      */
     public function show($id)
     {
-        // 
+        $buyDetails = \App\BuyDetail::where('buy_file_number',$id)->get();
+        return view('buys.show',compact('buyDetails'));
     }
 
     /**
@@ -90,5 +115,25 @@ class BuyController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function buyApi()
+    {
+        $model = Buy::query();
+
+        return DataTables::of($model)
+            ->addIndexColumn()
+            ->editColumn('total', function($model) {
+                return 'Rp ' . number_format($model->total);
+            })
+            ->addColumn('action', function ($model) {
+                return view('templates._action', [
+                    'model' => $model->file_number,
+                    'url_show' => route('buy.show', $model->file_number),
+                    // 'url_edit' => route('buy.edit', $model->id),
+                    // 'url_destroy' => route('buy.destroy', $model->id),
+                ]);
+            })
+            ->make(true);
     }
 }

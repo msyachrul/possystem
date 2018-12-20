@@ -28,6 +28,7 @@ class GoodController extends Controller
     {
         return [
             'name' => 'required|string|max:50',
+            'cost' => 'required|numeric|min:0',
             'price' => 'required|numeric|min:0',
             'good_category_id' => 'required|integer',
             'vendor_id' => 'required|integer',
@@ -165,12 +166,15 @@ class GoodController extends Controller
             ->addColumn('category_name', function ($model) {
                 return $model->goodCategory->name;
             })
+            ->editColumn('cost', function ($model) {
+                return 'Rp '. number_format($model->cost);
+            })
             ->editColumn('price', function ($model) {
                 return 'Rp '. number_format($model->price);
             })
             ->addColumn('action', function ($model) {
                 return view('templates._action', [
-                    'model' => $model,
+                    'model' => $model->name,
                     'url_show' => route('good.show', $model->id),
                     'url_edit' => route('good.edit', $model->id),
                     'url_destroy' => route('good.destroy', $model->id),

@@ -26,4 +26,5 @@ Route::resource('/good', 'GoodController');
 Route::get('/api/good', 'GoodController@goodApi')->name('good.api');
 
 Route::resource('/buy', 'BuyController');
+Route::post('/buy/good', 'BuyController@goods')->name('buy.goods');
 Route::get('/api/buy', 'BuyController@buyApi')->name('buy.api');

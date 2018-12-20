@@ -70,7 +70,7 @@ class VendorController extends Controller
             ->addIndexColumn()
             ->addColumn('action', function ($model) {
                 return view('templates._action', [
-                    'model' => $model,
+                    'model' => $model->name,
                     'url_show' => route('vendor.show', $model->id),
                     'url_edit' => route('vendor.edit', $model->id),
                     'url_destroy' => route('vendor.destroy', $model->id),

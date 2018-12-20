@@ -15,7 +15,8 @@ class CreateBuysTable extends Migration
     {
         Schema::create('buys', function (Blueprint $table) {
             $table->increments('id');        
-            $table->string('file_number',16);
+            $table->string('file_number',16)->unique();
+            $table->decimal('total',16,0);
             $table->timestamps();
             $table->softDeletes();
         });

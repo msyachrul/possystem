@@ -16,15 +16,16 @@ class CreateBuyDetailsTable extends Migration
         Schema::create('buy_details', function (Blueprint $table) {
             $table->increments('id');
             $table->decimal('cost',16,0);
+            $table->decimal('qty',10,0);
             $table->timestamps();
             $table->softDeletes();
         });
 
         Schema::table('buy_details', function (Blueprint $table) {
-            $table->unsignedInteger('buy_id');
-            $table->foreign('buy_id')->references('id')->on('buys')->onDelete('restrict');
-            $table->unsignedInteger('good_id');
-            $table->foreign('good_id')->references('id')->on('goods')->onDelete('restrict');
+            $table->string('buy_file_number');
+            $table->foreign('buy_file_number')->references('file_number')->on('buys')->onDelete('restrict');
+            $table->string('good_barcode');
+            $table->foreign('good_barcode')->references('barcode')->on('goods')->onDelete('restrict');
         });
     }
 
