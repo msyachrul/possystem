@@ -32,11 +32,12 @@ $('body').on('click', '.modal-show', function () {
 });
 
 $('.modal .btn-save').click(function (event) {
-	let form = $('.modal-body form'),
+	let form = $('#main-form'),
 		url = form.attr('action'),
 		method = $('input[name=_method]').val() == undefined ? 'POST' : 'PUT',
-		title = $('input[name=_method]').val() == undefined ? 'Tambah' : 'Perbaharui',
-		table = $('table').attr('id');
+		title = $('input[name=_method]').val() == undefined ? 'menambahkan' : 'memperbaharui',
+		table = $('table').attr('id'),
+		data = form.serialize();
 
 	form.find('.is-invalid').removeClass('is-invalid');
 	form.find('.invalid-feedback').remove();
@@ -44,14 +45,15 @@ $('.modal .btn-save').click(function (event) {
 	$.ajax({
 		url: url,
 		method: method,
-		data: form.serialize(),
+		data: data,
 		success: function (response) {
+			console.log(form.serialize());
 			$('.modal').modal('hide');
 			$('#' + table).DataTable().ajax.reload();
 			swal({
 				'type': 'success',
 				'title': 'Sukses!',
-				'text': title + ' vendor berhasil!',
+				'text': 'Berhasil ' + title + ' data!',
 			});
 		},
 		error: function (xhr) {
@@ -112,16 +114,16 @@ $('body').on('click', '.btn-destroy', function(event) {
 
 });
 
-$('#barcode').keypress(function(event) {
-	let form = $('form#buy'),
+$('body').on('keypress', '#barcode', function (event) {
+	let form = $('#search'),
 		url = form.attr('action'),
 		method = form.attr('method'),
 		csrf_token = $('meta[name="csrf-token"]').attr('content');
 
 	if (event.which == 13) {
-		let total = Number($('#total').attr('total')),
-			totalQty = Number($('#total-qty').attr('total-qty'));
-			barcode = $('#barcode').val();
+		let barcode = $('#barcode').val(),
+			totalQty = $('#totalqty').attr('totalqty'),
+			total = $('#total').attr('total');
 		$.ajax({
 			url: url,
 			type: method,
@@ -131,26 +133,24 @@ $('#barcode').keypress(function(event) {
 				'barcode': barcode,
 			},
 			success: function (response) {
-				me = $(response);
-				barcode = me.data('barcode');
-				totalQty += Number(me.data('qty'));
-				total += Number(me.data('subtotal'));
+				let me = $(response);
+				totalQty = Number(totalQty) + Number(me.find('#qty').val());
+				total = Number(total) + Number(me.find('#subtotal').val());
+				barcode = barcode.includes('*') ? barcode.split('*')[1] : barcode;
 
-				$('#total').attr('total',total).text(numberWithCommas(total));
-				$('#total-qty').attr('total-qty',totalQty).text(numberWithCommas(totalQty));
+				$('#totalqty').attr('totalqty',totalQty).text(totalQty);
+				$('#total').attr('total',total).text(total);
 
 				if ($('#' + barcode).length == 0) {
 					$('#table-good tbody').append(response);
 				}
 				else {
-					$('#' + barcode).attr({
-						'data-qty': Number($('#' + barcode).attr('data-qty')) + me.data('qty'),
-						'data-subtotal': Number($('#' + barcode).attr('data-subtotal')) + me.data('subtotal'),
-					});
-					$('#' + barcode + 'qty').text(Number($('#'+ barcode).attr('data-qty')));
-					$('#' + barcode + 'subtotal').text('Rp ' + numberWithCommas($('#' + barcode).attr('data-subtotal')));
-				}
+					bcode = $('#' + barcode),
+					qty = Number(bcode.find('#qty').val());
+					bcode.find('#qty').val(qty + Number(me.attr('qty')));
+					bcode.find('#subtotal').val(Number(bcode.find('#cost').val()) * Number(bcode.find('#qty').val()));
 
+				}
 			},
 			error: function (xhr) {
 				swal({
@@ -162,40 +162,4 @@ $('#barcode').keypress(function(event) {
 		});
 		$('#barcode').val('');
 	}
-});
-$('body').on('click', '.btn-buy', function (event) {
-	let data = [],
-		url = $(this).data('href'),
-		csrf_token = $('meta[name="csrf-token"]').attr('content');
-
-	$('#table-good tbody tr').each(function () {
-		data.push($(this).data());
-	});
-
-	$.ajax({
-		url: url,
-		type: 'POST',
-		data: {
-			'_token': csrf_token,
-			'buys': data,
-		},
-		success: function (response) {
-			swal({
-				'type': 'success',
-				'title': 'Berhasil!',
-				'text': 'Transaksi pembelian berhasil!'
-			});
-
-		},
-		error: function (xhr) {
-			swal({
-				'type': 'error',
-				'title': 'Error!',
-				'text': 'Transaksi pembelian gagal!!',
-			});
-		},
-	});
-	$('#total-qty').attr('total-qty',0).text('-');
-	$('#total').attr('total',0).text('-');
-	$('#table-good tbody').html('');
 });

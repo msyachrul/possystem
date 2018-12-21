@@ -39,7 +39,7 @@ class BuyController extends Controller
      */
     public function create(Request $request)
     {
-        return view('buys.buy');
+        return view('buys.form');
     }
 
     /**
@@ -59,14 +59,14 @@ class BuyController extends Controller
 
         $model = Buy::create([
             'file_number' => $fileNumber,
-            'total' => array_sum(array_column($request->buys, 'subtotal')),
+            'total' => array_sum($request->subtotal),
         ]);
 
-        foreach ($request->buys as $key => $buy) {
+        for ($i=0; $i < count($request->barcode); $i++) { 
             $model->buyDetails()->create([
-                'good_barcode' => $buy['barcode'],
-                'cost' => $buy['cost'],
-                'qty' => $buy['qty'],
+                'good_barcode' => $request->barcode[$i],
+                'cost' => $request->cost[$i],
+                'qty' => $request->qty[$i],
             ]);
         }
     }

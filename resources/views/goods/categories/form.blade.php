@@ -1,6 +1,7 @@
 {!! Form::model($model, [
 	'route' => $model->exists ? ['good_category.update', $model->id] : 'good_category.store',
 	'method' => $model->exists ? 'PUT' : 'POST',
+	'id' => 'main-form',
 ]) !!}
 
 	<div class="form-group">
