@@ -98,7 +98,7 @@ $('body').on('click', '.btn-destroy', function(event) {
 					swal({
 						'type': 'success',
 						'title': 'Sukses!',
-						'text': 'Data vendor berhasil dihapus!',
+						'text': 'Data ' + title + ' berhasil dihapus!',
 					})
 				},
 				error: function (xhr) {
@@ -115,7 +115,7 @@ $('body').on('click', '.btn-destroy', function(event) {
 });
 
 $('body').on('keypress', '#barcode', function (event) {
-	let form = $('#search'),
+	let form = $('#sale-search'),
 		url = form.attr('action'),
 		method = form.attr('method'),
 		csrf_token = $('meta[name="csrf-token"]').attr('content');
@@ -162,4 +162,51 @@ $('body').on('keypress', '#barcode', function (event) {
 		});
 		$('#barcode').val('');
 	}
+});
+
+$('body').on('change', '#vendor-selector', function (event) {
+	let form = $('#buy-search'),
+		url = form.attr('action'),
+		method = form.attr('method'),
+		csrf_token = $('meta[name="csrf-token"]').attr('content'),
+		select = $(this),
+		vendorId = select.val();
+
+	$.ajax({
+		url: url,
+		type: method,
+		dataType: 'html',
+		data: {
+			'_token': csrf_token,
+			'vendorId': vendorId,
+		},
+		success: function (response) {
+			if (response != 0) {
+				form.addClass('d-none');
+				$('#sub-buy-search').removeClass('d-none');
+				$('#good-selector').html(response);
+			}
+		}
+	});
+});
+
+$('body').on('change', '#good-selector', function (event) {
+	let form = $('#sub-buy-search'),
+		me = $(this),
+		url = me.attr('href'),
+		csrf_token = $('meta[name="csrf-token"]').attr('content'),
+		barcode = me.val();
+	
+	$.ajax({
+		url: url,
+		type: 'POST',
+		data: {
+			'_token': csrf_token,
+			'barcode': barcode,
+		},
+		success: function (response) {
+			form.find('input[name=cost]').val(response.cost);
+			form.find('input[name=qty]').focus();
+		}
+	});
 });

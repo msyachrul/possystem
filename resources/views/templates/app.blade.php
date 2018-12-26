@@ -59,7 +59,7 @@
 				<a href="{{ route('good.index') }}"><i class="fa fa-shopping-bag fa-custom fa-2x"></i><span class="nav-text">Barang</span></a>
 			</li>
 			<li>
-				<a href="#"><i class="fa fa-cart-plus fa-custom fa-2x"></i><span class="nav-text">Pembelian</span></a>
+				<a href="{{ route('buy.index') }}"><i class="fa fa-cart-plus fa-custom fa-2x"></i><span class="nav-text">Pembelian</span></a>
 			</li>
 			<li>
 				<a href="{{ route('sale.index') }}"><i class="fa fa-shopping-cart fa-custom fa-2x"></i><span class="nav-text">Penjualan</span></a>

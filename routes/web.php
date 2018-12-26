@@ -28,6 +28,9 @@ Route::get('/api/good', 'GoodController@goodApi')->name('good.api');
 Route::resource('/buy', 'BuyController')->except([
 	'edit', 'update', 'destroy',
 ]);
+Route::post('/buy/get_goods', 'BuyController@getGoods')->name('buy.getGoods');
+Route::post('/buy/get_good', 'BuyController@getGood')->name('buy.getGood');
+Route::get('/api/buy', 'BuyController@buyApi')->name('buy.api');
 
 Route::resource('/sale', 'SaleController')->except([
 	'edit', 'update', 'destroy',

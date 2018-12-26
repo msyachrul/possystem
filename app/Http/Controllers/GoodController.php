@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Good;
+use App\GoodCategory;
+use App\Vendor;
 use DataTables;
 use Illuminate\Http\Request;
 use Faker\Factory as Faker;
@@ -37,7 +39,7 @@ class GoodController extends Controller
 
     protected function categories()
     {
-        $goodCategories = \App\GoodCategory::orderBy('name')->get();
+        $goodCategories = GoodCategory::orderBy('name')->get();
         $modelCategories = [];
 
         foreach ($goodCategories as $goodCategory) {
@@ -49,7 +51,7 @@ class GoodController extends Controller
 
     protected function vendors()
     {
-        $vendors = \App\Vendor::orderBy('name')->get();
+        $vendors = Vendor::orderBy('name')->get();
         $modelVendors = [];
 
         foreach ($vendors as $vendor) {
