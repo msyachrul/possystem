@@ -12,7 +12,7 @@
 			<div class="input-group-prepend">
 				<span class="input-group-text">Rp</span>
 			</div>
-			<input type="number" id="cost" name="cost[]" value="{{ $model->cost }}" form="main-form" class="form-control text-right">
+			<input type="number" id="price" name="price[]" value="{{ $model->price }}" form="main-form" class="form-control text-right">
 		</div>
 	</td>
 	<td>
@@ -24,7 +24,7 @@
 			<div class="input-group-prepend">
 				<span class="input-group-text">Rp</span>
 			</div>
-			<input type="number" id="subtotal" name="subtotal[]" value="{{ $model->cost * $qty }}" form="main-form" class="form-control text-right" readonly>
+			<input type="number" id="subtotal" name="subtotal[]" value="{{ $model->price * $qty }}" form="main-form" class="form-control text-right" readonly>
 		</div>
 	</td>
 </tr>

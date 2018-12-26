@@ -10,13 +10,13 @@
 	</thead>
 	<tbody>
 		@php $no=1 @endphp
-		@foreach ($buyDetails as $detail)
+		@foreach ($saleDetails as $detail)
 			<tr>
 				<td>{{ $no++ }}</td>
 				<td>{{ $detail->good_barcode. ' - ' .$detail->good->name }}</td>
-				<td class="text-right">Rp {{ number_format($detail->cost) }}</td>
+				<td class="text-right">Rp {{ number_format($detail->price) }}</td>
 				<td class="text-right">{{ $detail->qty }}</td>
-				<td class="text-right">Rp {{ number_format($detail->cost * $detail->qty) }}</td>
+				<td class="text-right">Rp {{ number_format($detail->price * $detail->qty) }}</td>
 			</tr>
 		@endforeach
 	</tbody>

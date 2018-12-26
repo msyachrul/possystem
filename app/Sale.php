@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Buy extends Model
+class Sale extends Model
 {
     use SoftDeletes;
 
@@ -13,8 +13,8 @@ class Buy extends Model
 
     protected $dates = ['deleted_at'];
 
-    public function buyDetails()
+    public function saleDetails()
     {
-    	return $this->hasMany('App\BuyDetail', 'buy_number', 'number');
+    	return $this->hasMany('App\SaleDetail', 'sale_number', 'number');
     }
 }

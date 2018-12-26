@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBuysTable extends Migration
+class CreateSalesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class CreateBuysTable extends Migration
      */
     public function up()
     {
-        Schema::create('buys', function (Blueprint $table) {
-            $table->increments('id');        
+        Schema::create('sales', function (Blueprint $table) {
+            $table->increments('id');
             $table->string('number',16)->unique();
             $table->decimal('total',16,0);
             $table->timestamps();
@@ -29,6 +29,6 @@ class CreateBuysTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('buys');
+        Schema::dropIfExists('sales');
     }
 }

@@ -147,8 +147,8 @@ $('body').on('keypress', '#barcode', function (event) {
 				else {
 					bcode = $('#' + barcode),
 					qty = Number(bcode.find('#qty').val());
-					bcode.find('#qty').val(qty + Number(me.attr('qty')));
-					bcode.find('#subtotal').val(Number(bcode.find('#cost').val()) * Number(bcode.find('#qty').val()));
+					bcode.find('#qty').val(qty + Number(me.find('#qty').val()));
+					bcode.find('#subtotal').val(Number(bcode.find('#price').val()) * Number(bcode.find('#qty').val()));
 
 				}
 			},

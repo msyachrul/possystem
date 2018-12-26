@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Buy;
-use DataTables;
+use App\SaleDetail;
 use Illuminate\Http\Request;
 
-class BuyController extends Controller
+class SaleDetailController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +14,7 @@ class BuyController extends Controller
      */
     public function index()
     {
-        // 
+        //
     }
 
     /**
@@ -23,9 +22,9 @@ class BuyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        // 
+        //
     }
 
     /**
@@ -36,27 +35,27 @@ class BuyController extends Controller
      */
     public function store(Request $request)
     {
-        // 
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Buy  $buy
+     * @param  \App\SaleDetail  $saleDetail
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(SaleDetail $saleDetail)
     {
-        // 
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Buy  $buy
+     * @param  \App\SaleDetail  $saleDetail
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(SaleDetail $saleDetail)
     {
         //
     }
@@ -65,10 +64,10 @@ class BuyController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Buy  $buy
+     * @param  \App\SaleDetail  $saleDetail
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, SaleDetail $saleDetail)
     {
         //
     }
@@ -76,10 +75,10 @@ class BuyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Buy  $buy
+     * @param  \App\SaleDetail  $saleDetail
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(SaleDetail $saleDetail)
     {
         //
     }
