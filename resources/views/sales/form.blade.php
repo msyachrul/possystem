@@ -3,7 +3,7 @@
 </form>
 <form id="sale-search" action="{{ route('sale.getGood') }}" method="POST">
 	<div class="form-group">
-		<input type="search" id="barcode" name="barcode" class="form-control" placeholder="Masukan barcode atau nama barang" autocomplete="off" autofocus>
+		<input type="search" id="search" name="search" class="form-control" placeholder="Masukan barcode atau nama barang" autocomplete="off" autofocus>
 	</div>
 </form>
 <hr>
@@ -21,9 +21,9 @@
 		<thead>
 			<tr>				
 				<th>Barang</th>
-				<th width="25%" class="text-right">Harga</th>
-				<th width="15%" class="text-right">Qty</th>
-				<th width="25%" class="text-right">Total</th>
+				<th class="text-right">Harga</th>
+				<th width="5%" class="text-right">Qty</th>
+				<th class="text-right">Total</th>
 			</tr>
 		</thead>
 		<tbody>

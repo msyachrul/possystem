@@ -10,15 +10,15 @@ class SaleController extends Controller
 {
     public function getGood(Request $request)
     {
-        $barcode = [1, $request->barcode];
+        $search = [1, $request->search];
 
-        if (preg_match('[\W]', $request->barcode)) {
-            $barcode = explode('*', $request->barcode);
+        if (strpos($request->search, '*')) {
+            $search = explode('*', $request->search);
         }
 
         return view('sales.good',[
-            'qty' => $barcode[0],
-            'model' => \App\Good::where('barcode',$barcode[1])->firstOrFail(),
+            'qty' => $search[0],
+            'model' => \App\Good::where('barcode',$search[1])->orWhere('name',$search[1])->firstOrFail(),
         ]);   
     }
     /**

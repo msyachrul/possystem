@@ -14,7 +14,7 @@
 						<tr>
 							<th width="1%">#</th>
 							<th>No Berkas</th>
-							<th width="15%">Total</th>
+							<th width="150px">Total</th>
 							<th width="5%"><button class="btn btn-primary btn-sm modal-show" data-href="{{ route('sale.create') }}" data-title="Tambah Penjualan"><i class="fa fa-plus"></i></button></th>
 						</tr>
 					</thead>
@@ -40,8 +40,69 @@
 				{data: 'action', name: "action"},
 			],
 			columnDefs: [
+				{targets: 2, className: 'text-right'},
 				{targets: 3, orderable: false},
+				
 			],
+		});
+
+		$('body').on('keypress', '#search', function (event) {
+			let form = $('#sale-search'),
+				url = form.attr('action'),
+				method = form.attr('method'),
+				csrf_token = $('meta[name="csrf-token"]').attr('content');
+
+			if (event.which == 13) {
+				let search = $(this).val();
+				let totalQty = Number($('#totalqty').attr('totalqty'));
+				let total = Number($('#total').attr('total'));
+
+				$.ajax({
+					url: url,
+					type: method,
+					dataType: 'html',
+					data: {
+						'_token': csrf_token,
+						'search': search,
+					},
+					success: function (response) {
+						let res = $(response),
+							barcodeRow = res.attr('id'),
+							resQty = Number(res.find('input#qty').val()),
+							resSubTotal = Number(res.find('input#subtotal').val());
+							totalQty += resQty;
+							total += resSubTotal;
+
+						$('#totalqty').attr('totalqty',totalQty).text(numberWithCommas(totalQty));
+						$('#total').attr('total',total).text(numberWithCommas(total));
+
+						if ($('#' + barcodeRow).length == 0) {
+							$('#table-good tbody').append(response);
+						}
+						else {
+							let row = $('#' + barcodeRow);
+							let price = Number(row.find('input#price').val());
+							let qty = Number(row.find('input#qty').val());
+								newQty = qty + resQty;
+								subTotal = price * newQty;
+
+							row.find('input#qty').val(newQty);
+							row.find('span#qty').text(newQty);
+							row.find('input#subtotal').val(subTotal);
+							row.find('span#subtotal').text(numberWithCommas(subTotal));
+
+						}
+					},
+					error: function (xhr) {
+						swal({
+							'type': 'error',
+							'title': 'Error!',
+							'text': 'Barang tidak ditemukan!',
+						});
+					}
+				});
+				$('#search').val('');
+			}
 		});
 	</script>
 @endpush

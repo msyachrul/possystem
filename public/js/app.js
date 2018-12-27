@@ -77,7 +77,7 @@ $('body').on('click', '.btn-destroy', function(event) {
 
 	swal({
 		'type': 'question',
-		'title': 'Apakah anda yakin untuk hapus vendor ' + title + ' ?',
+		'title': 'Apakah anda yakin untuk hapus ' + title + ' ?',
 		'text': 'Mohon periksa terlebih dahulu!',
 		'showCancelButton': true,
 		'confirmButtonText': 'Ya, saya yakin!',
@@ -109,104 +109,6 @@ $('body').on('click', '.btn-destroy', function(event) {
 					});
 				},
 			});
-		}
-	});
-
-});
-
-$('body').on('keypress', '#barcode', function (event) {
-	let form = $('#sale-search'),
-		url = form.attr('action'),
-		method = form.attr('method'),
-		csrf_token = $('meta[name="csrf-token"]').attr('content');
-
-	if (event.which == 13) {
-		let barcode = $('#barcode').val(),
-			totalQty = $('#totalqty').attr('totalqty'),
-			total = $('#total').attr('total');
-		$.ajax({
-			url: url,
-			type: method,
-			dataType: 'html',
-			data: {
-				'_token': csrf_token,
-				'barcode': barcode,
-			},
-			success: function (response) {
-				let me = $(response);
-				totalQty = Number(totalQty) + Number(me.find('#qty').val());
-				total = Number(total) + Number(me.find('#subtotal').val());
-				barcode = barcode.includes('*') ? barcode.split('*')[1] : barcode;
-
-				$('#totalqty').attr('totalqty',totalQty).text(totalQty);
-				$('#total').attr('total',total).text(total);
-
-				if ($('#' + barcode).length == 0) {
-					$('#table-good tbody').append(response);
-				}
-				else {
-					bcode = $('#' + barcode),
-					qty = Number(bcode.find('#qty').val());
-					bcode.find('#qty').val(qty + Number(me.find('#qty').val()));
-					bcode.find('#subtotal').val(Number(bcode.find('#price').val()) * Number(bcode.find('#qty').val()));
-
-				}
-			},
-			error: function (xhr) {
-				swal({
-					'type': 'error',
-					'title': 'Error!',
-					'text': 'Barang tidak ditemukan!',
-				});
-			}
-		});
-		$('#barcode').val('');
-	}
-});
-
-$('body').on('change', '#vendor-selector', function (event) {
-	let form = $('#buy-search'),
-		url = form.attr('action'),
-		method = form.attr('method'),
-		csrf_token = $('meta[name="csrf-token"]').attr('content'),
-		select = $(this),
-		vendorId = select.val();
-
-	$.ajax({
-		url: url,
-		type: method,
-		dataType: 'html',
-		data: {
-			'_token': csrf_token,
-			'vendorId': vendorId,
-		},
-		success: function (response) {
-			if (response != 0) {
-				form.addClass('d-none');
-				$('#sub-buy-search').removeClass('d-none');
-				$('#good-selector').html(response);
-			}
-		}
-	});
-});
-
-$('body').on('change', '#good-selector', function (event) {
-	let form = $('#sub-buy-search'),
-		me = $(this),
-		url = me.attr('href'),
-		csrf_token = $('meta[name="csrf-token"]').attr('content'),
-		barcode = me.val();
-	
-	$.ajax({
-		url: url,
-		type: 'POST',
-		data: {
-			'_token': csrf_token,
-			'barcode': barcode,
-		},
-		success: function (response) {
-			form.find('input[name=cost]').val(response.cost);
-			form.find('input[name=qty]').focus();
 		}
 	});
 });

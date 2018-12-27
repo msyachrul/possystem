@@ -44,7 +44,9 @@
 				{data: 'action', name: 'action'},
 			],
 			columnDefs: [
+				{targets: [5, 6], className: 'text-right'},
 				{targets: 7, orderable: false},
+			
 			],
 		});
 	</script>
