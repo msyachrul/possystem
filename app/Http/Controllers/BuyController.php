@@ -12,11 +12,7 @@ class BuyController extends Controller
 {
     public function getGoods(Request $request)
     {
-        $goods = Good::where('vendor_id',$request->vendorId)->get();
-
-        if($goods->isNotEmpty()) {            
-            return view('buys.good',compact('goods'));
-        }
+        return Good::where('vendor_id',$request->vendorId)->get();
     }
 
     public function getGood(Request $request)

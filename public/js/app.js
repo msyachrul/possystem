@@ -47,7 +47,6 @@ $('.modal .btn-save').click(function (event) {
 		method: method,
 		data: data,
 		success: function (response) {
-			console.log(form.serialize());
 			$('.modal').modal('hide');
 			$('#' + table).DataTable().ajax.reload();
 			swal({

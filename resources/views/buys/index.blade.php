@@ -43,5 +43,56 @@
 				{targets: 3, orderable: false},
 			],
 		});
+
+		$('body').on('change', '#vendor-selector', function (event) {
+			let form = $('#buy-search'),
+				url = form.attr('action'),
+				method = form.attr('method'),
+				csrf_token = $('meta[name="csrf-token"]').attr('content'),
+				select = $(this),
+				vendorId = select.val();
+
+			$.ajax({
+				url: url,
+				type: method,
+				dataType: 'html',
+				data: {
+					'_token': csrf_token,
+					'vendorId': vendorId,
+				},
+				success: function (response) {
+					if (JSON.parse(response).length > 0) {
+						select.attr('disabled','disabled');
+
+						$.each(JSON.parse(response), function (key, value) {
+							$('#good-selector').append('<option value="' + value.barcode + '">' + value.name + '</option>');
+						});
+						
+						$('#sub-buy-search').removeClass('d-none');
+					}
+				}
+			});
+		});
+
+		$('body').on('change', '#good-selector', function (event) {
+			let form = $('#sub-buy-search'),
+				me = $(this),
+				url = me.attr('href'),
+				csrf_token = $('meta[name="csrf-token"]').attr('content'),
+				barcode = me.val();
+			
+			$.ajax({
+				url: url,
+				type: 'POST',
+				data: {
+					'_token': csrf_token,
+					'barcode': barcode,
+				},
+				success: function (response) {
+					form.find('input[name=cost]').val(response.cost);
+					form.find('input[name=qty]').focus();
+				}
+			});
+		});
 	</script>
 @endpush

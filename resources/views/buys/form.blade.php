@@ -49,9 +49,9 @@
 		<thead>
 			<tr>				
 				<th>Barang</th>
-				<th width="25%" class="text-right">Harga</th>
-				<th width="15%" class="text-right">Qty</th>
-				<th width="25%" class="text-right">Total</th>
+				<th class="text-right">Harga</th>
+				<th width="5%" class="text-right">Qty</th>
+				<th class="text-right">Total</th>
 			</tr>
 		</thead>
 		<tbody>
