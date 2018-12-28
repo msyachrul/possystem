@@ -54,8 +54,6 @@
 
 			if (event.which == 13) {
 				let search = $(this).val();
-				let totalQty = Number($('#totalqty').attr('totalqty'));
-				let total = Number($('#total').attr('total'));
 
 				$.ajax({
 					url: url,
@@ -68,30 +66,31 @@
 					success: function (response) {
 						let res = $(response),
 							barcodeRow = res.attr('id'),
+							row = $('#' + barcodeRow),
+							resPrice = Number(res.find('input#price').val()),
 							resQty = Number(res.find('input#qty').val()),
 							resSubTotal = Number(res.find('input#subtotal').val());
-							totalQty += resQty;
-							total += resSubTotal;
 
-						$('#totalqty').attr('totalqty',totalQty).text(numberWithCommas(totalQty));
-						$('#total').attr('total',total).text(numberWithCommas(total));
-
-						if ($('#' + barcodeRow).length == 0) {
+						if (row.length == 0) {
 							$('#table-good tbody').append(response);
 						}
 						else {
-							let row = $('#' + barcodeRow);
-							let price = Number(row.find('input#price').val());
 							let qty = Number(row.find('input#qty').val());
 								newQty = qty + resQty;
-								subTotal = price * newQty;
+								subTotal = resPrice * newQty;
 
 							row.find('input#qty').val(newQty);
 							row.find('span#qty').text(newQty);
-							row.find('input#subtotal').val(subTotal);
+							row.find('input.subtotal').val(subTotal);
 							row.find('span#subtotal').text(numberWithCommas(subTotal));
-
 						}
+
+						let sum = 0;
+						$.each($('#table-good input.subtotal'), function () {
+							sum += Number($(this).val());
+						});
+
+						$('#total').text(numberWithCommas(sum));
 					},
 					error: function (xhr) {
 						swal({

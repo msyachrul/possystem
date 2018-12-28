@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class SaleController extends Controller
 {
-    public function getGood(Request $request)
+    public function cart(Request $request)
     {
         $search = [1, $request->search];
 
@@ -52,7 +52,8 @@ class SaleController extends Controller
         $no = 1;
 
         do {
-            $number = date('dmy');
+            $number = '01';
+            $number .= date('dmy');
             $number .= sprintf('%04d',$no++);
         } while (Sale::where('number', $number)->first());
 

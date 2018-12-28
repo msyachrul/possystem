@@ -1,7 +1,7 @@
 <form id="main-form" action="{{ route('sale.store') }}" method="POST">
 	@csrf
 </form>
-<form id="sale-search" action="{{ route('sale.getGood') }}" method="POST">
+<form id="sale-search" action="{{ route('sale.cart') }}" method="POST">
 	<div class="form-group">
 		<input type="search" id="search" name="search" class="form-control" placeholder="Masukan barcode atau nama barang" autocomplete="off" autofocus>
 	</div>

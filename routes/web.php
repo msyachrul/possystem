@@ -28,12 +28,13 @@ Route::get('/api/good', 'GoodController@goodApi')->name('good.api');
 Route::resource('/buy', 'BuyController')->except([
 	'edit', 'update', 'destroy',
 ]);
-Route::post('/buy/get_goods', 'BuyController@getGoods')->name('buy.getGoods');
+Route::post('/buy/get_goods', 'BuyController@getVendorGoods')->name('buy.getVendorGoods');
 Route::post('/buy/get_good', 'BuyController@getGood')->name('buy.getGood');
+Route::post('/buy/cart', 'BuyController@cart')->name('buy.cart');
 Route::get('/api/buy', 'BuyController@buyApi')->name('buy.api');
 
 Route::resource('/sale', 'SaleController')->except([
 	'edit', 'update', 'destroy',
 ]);
-Route::post('/sale/get_good', 'SaleController@getGood')->name('sale.getGood');
+Route::post('/sale/cart', 'SaleController@cart')->name('sale.cart');
 Route::get('/api/sale', 'SaleController@saleApi')->name('sale.api');

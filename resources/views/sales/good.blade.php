@@ -2,7 +2,7 @@
 	<input type="hidden" id="barcode" name="barcode[]" value="{{ $model->barcode }}" form="main-form">
 	<input type="hidden" id="price" name="price[]" value="{{ $model->price }}" form="main-form">
 	<input type="hidden" id="qty" name="qty[]" value="{{ $qty }}" form="main-form">
-	<input type="hidden" id="subtotal" name="subtotal[]" value="{{ $model->price * $qty }}" form="main-form">
+	<input type="hidden" class="subtotal" name="subtotal[]" value="{{ $model->price * $qty }}" form="main-form">
 	<td>
 		{{ $model->barcode. ' - ' .$model->name}}
 	</td>

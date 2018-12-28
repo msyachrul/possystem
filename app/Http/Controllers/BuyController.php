@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class BuyController extends Controller
 {
-    public function getGoods(Request $request)
+    public function getVendorGoods(Request $request)
     {
         return Good::where('vendor_id',$request->vendorId)->get();
     }
@@ -18,6 +18,16 @@ class BuyController extends Controller
     public function getGood(Request $request)
     {
         return Good::where('barcode',$request->barcode)->first();
+    }
+
+    public function cart(Request $request)
+    {
+        $model = Good::where('barcode',$request->barcode)->firstOrFail();
+        return view('buys.good',[
+            'model' => $model,
+            'cost' => $request->cost,
+            'qty' => $request->qty,
+        ]);
     }
     /**
      * Display a listing of the resource.
@@ -48,7 +58,26 @@ class BuyController extends Controller
      */
     public function store(Request $request)
     {
-        // 
+        $no = 1;
+
+        do {
+            $number = '02';
+            $number .= date('dmy');
+            $number .= sprintf('%04d',$no++);
+        } while (Buy::where('number', $number)->first());
+
+        $model = Buy::create([
+            'number' => $number,
+            'total' => array_sum($request->subtotal),
+        ]);
+
+        for ($i=0; $i < count($request->barcode); $i++) { 
+            $model->buyDetails()->create([
+                'good_barcode' => $request->barcode[$i],
+                'cost' => $request->cost[$i],
+                'qty' => $request->qty[$i],
+            ]);
+        }
     }
 
     /**
@@ -59,7 +88,8 @@ class BuyController extends Controller
      */
     public function show($id)
     {
-        // 
+        $buyDetails = \App\BuyDetail::where('buy_number',$id)->get();
+        return view('buys.show',compact('buyDetails'));
     }
 
     /**
@@ -108,7 +138,7 @@ class BuyController extends Controller
             ->addColumn('action', function ($model) {
                 return view('templates._action', [
                     'model' => $model->number,
-                    'url_show' => route('sale.show', $model->number),
+                    'url_show' => route('buy.show', $model->number),
                     // 'url_edit' => route('buy.edit', $model->id),
                     // 'url_destroy' => route('buy.destroy', $model->id),
                 ]);

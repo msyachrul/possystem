@@ -94,5 +94,53 @@
 				}
 			});
 		});
+
+		$('body').on('submit', '#sub-buy-search', function (event) {
+			event.preventDefault();
+
+			let form = $(this),
+				url = form.attr('action'),
+				method = form.attr('method'),
+				data = form.serialize();
+
+			$.ajax({
+				url: url,
+				type: method,
+				dataType: 'html',
+				data: data,
+				success: function (response) {
+					let res = $(response),
+						barcodeRow = res.attr('id'),
+						row = $('#' + barcodeRow),
+						resCost = Number(res.find('input.cost').val()),
+						resQty = Number(res.find('input.qty').val()),
+						resSubTotal = Number(res.find('input.subtotal').val());
+
+					if (row.length == 0) {
+							$('#table-good tbody').append(response);
+						}
+					else {
+						let qty = Number(row.find('input.qty').val());
+							newQty = qty + resQty;
+							subTotal = resCost * newQty;
+
+						row.find('input.cost').val(resCost);
+						row.find('span.cost').text(numberWithCommas(resCost));
+						row.find('input.qty').val(newQty);
+						row.find('span.qty').text(newQty);
+						row.find('input.subtotal').val(subTotal);
+						row.find('span.subtotal').text(numberWithCommas(subTotal));
+					}
+
+					let sum = 0;
+					$.each($('#table-good input.subtotal'), function () {
+						sum += Number($(this).val());
+					});
+
+					$('#total').text(numberWithCommas(sum));
+					form.trigger('reset');
+				},
+			});
+		});
 	</script>
 @endpush
