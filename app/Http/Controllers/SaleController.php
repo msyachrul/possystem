@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Sale;
 use App\Good;
 use DataTables;
+use Exception;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
@@ -17,9 +18,11 @@ class SaleController extends Controller
             $search = explode('*', $request->search);
         }
 
+        $model = Good::where('barcode',$search[1])->orWhere('name',$search[1])->firstOrFail();
+
         return view('sales.good',[
             'qty' => $search[0],
-            'model' => \App\Good::where('barcode',$search[1])->orWhere('name',$search[1])->firstOrFail(),
+            'model' => $model,
         ]);   
     }
     /**

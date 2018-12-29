@@ -67,30 +67,35 @@
 						let res = $(response),
 							barcodeRow = res.attr('id'),
 							row = $('#' + barcodeRow),
-							resPrice = Number(res.find('input#price').val()),
-							resQty = Number(res.find('input#qty').val()),
-							resSubTotal = Number(res.find('input#subtotal').val());
+							resPrice = Number(res.find('input.price').val()),
+							resQty = Number(res.find('input.qty').val()),
+							resSubTotal = Number(res.find('input.subtotal').val());
 
 						if (row.length == 0) {
 							$('#table-good tbody').append(response);
 						}
 						else {
-							let qty = Number(row.find('input#qty').val());
+							let qty = Number(row.find('input.qty').val());
 								newQty = qty + resQty;
 								subTotal = resPrice * newQty;
 
-							row.find('input#qty').val(newQty);
-							row.find('span#qty').text(newQty);
+							row.find('input.qty').val(newQty);
+							row.find('span.qty').text(newQty);
 							row.find('input.subtotal').val(subTotal);
-							row.find('span#subtotal').text(numberWithCommas(subTotal));
+							row.find('span.subtotal').text(numberWithCommas(subTotal));
 						}
 
-						let sum = 0;
-						$.each($('#table-good input.subtotal'), function () {
-							sum += Number($(this).val());
+						let cart = $('#table-good tbody tr');
+						let totalQty = 0;
+						let total = 0;
+
+						$.each(cart, function () {
+							totalQty += Number($(this).find('input.qty').val());
+							total += Number($(this).find('input.subtotal').val());
 						});
 
-						$('#total').text(numberWithCommas(sum));
+						$('#totalqty').text(numberWithCommas(totalQty));
+						$('#total').text(numberWithCommas(total));
 					},
 					error: function (xhr) {
 						swal({

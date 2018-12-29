@@ -132,12 +132,17 @@
 						row.find('span.subtotal').text(numberWithCommas(subTotal));
 					}
 
-					let sum = 0;
-					$.each($('#table-good input.subtotal'), function () {
-						sum += Number($(this).val());
+					let cart = $('#table-good tbody tr');
+					let totalQty = 0;
+					let total = 0;
+
+					$.each(cart, function () {
+						totalQty += Number($(this).find('input.qty').val());
+						total += Number($(this).find('input.subtotal').val());
 					});
 
-					$('#total').text(numberWithCommas(sum));
+					$('#totalqty').text(numberWithCommas(totalQty));
+					$('#total').text(numberWithCommas(total));
 					form.trigger('reset');
 				},
 			});
