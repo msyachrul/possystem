@@ -9,7 +9,7 @@ class Good extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['barcode', 'name', 'cost', 'price', 'good_category_id', 'vendor_id'];
+    protected $fillable = ['barcode', 'name', 'qty', 'cost', 'price', 'good_category_id', 'vendor_id'];
 
     protected $dates = ['deleted_at'];
 

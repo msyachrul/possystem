@@ -27,12 +27,12 @@
 				<div class="input-group-prepend">
 					<div class="input-group-text">Rp</div>
 				</div>
-				<input type="number" name="cost" class="form-control text-right" placeholder="Harga">
+				<input type="number" name="cost" class="form-control" placeholder="Harga">
 			</div>
 		</div>
 		<div class="form-group col-sm-2">
 			<label class="control-label">Qty</label>
-			<input type="number" name="qty" class="form-control text-right" placeholder="Qty">
+			<input type="number" name="qty" class="form-control" placeholder="Qty">
 		</div>
 		<div class="form-group col-sm-1">
 			<label class="control-label">&nbsp</label>

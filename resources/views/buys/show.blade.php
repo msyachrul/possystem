@@ -13,7 +13,7 @@
 		@foreach ($buyDetails as $detail)
 			<tr>
 				<td>{{ $no++ }}</td>
-				<td>{{ $detail->good_barcode. ' - ' .$detail->good->name }}</td>
+				<td>{{ $detail->good_barcode. ' - ' .$detail->good()->withTrashed()->first()->name }}</td>
 				<td class="text-right">Rp {{ number_format($detail->cost) }}</td>
 				<td class="text-right">{{ $detail->qty }}</td>
 				<td class="text-right">Rp {{ number_format($detail->cost * $detail->qty) }}</td>

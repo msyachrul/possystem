@@ -25,7 +25,7 @@ class CreateBuyDetailsTable extends Migration
             $table->string('buy_number');
             $table->foreign('buy_number')->references('number')->on('buys')->onDelete('restrict');
             $table->string('good_barcode');
-            $table->foreign('good_barcode')->references('barcode')->on('goods')->onDelete('restrict');
+            $table->foreign('good_barcode')->references('barcode')->on('goods')->onUpdate('cascade')->onDelete('restrict');
         });
     }
 

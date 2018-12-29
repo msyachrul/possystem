@@ -72,10 +72,17 @@ class BuyController extends Controller
         ]);
 
         for ($i=0; $i < count($request->barcode); $i++) { 
+            $good = Good::where('barcode',$request->barcode[$i])->firstOrFail();
+            $qty = $good->qty + $request->qty[$i];
+            $cost = (($good->qty * $good->cost) + ($request->qty[$i] * $request->cost[$i])) / $qty;
+
             $model->buyDetails()->create([
                 'good_barcode' => $request->barcode[$i],
                 'cost' => $request->cost[$i],
                 'qty' => $request->qty[$i],
+            ])->good()->update([
+                'qty' => $qty,
+                'cost' => $cost,
             ]);
         }
     }

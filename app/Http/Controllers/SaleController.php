@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Sale;
+use App\Good;
 use DataTables;
 use Illuminate\Http\Request;
 
@@ -63,10 +64,15 @@ class SaleController extends Controller
         ]);
 
         for ($i=0; $i < count($request->barcode); $i++) { 
+            $good = Good::where('barcode',$request->barcode[$i])->firstOrFail();
+            $qty = $good->qty - $request->qty[$i];
+
             $model->saleDetails()->create([
                 'good_barcode' => $request->barcode[$i],
                 'price' => $request->price[$i],
                 'qty' => $request->qty[$i],
+            ])->good()->update([
+                'qty' => $qty,
             ]);
         }
     }

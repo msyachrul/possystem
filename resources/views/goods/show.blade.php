@@ -20,9 +20,14 @@
 		<td>{{ $model->vendor->name }}</td>
 	</tr>
 	<tr>
+		<td>Qty</td>
+		<td>:</td>
+		<td>{{ $model->qty }}</td>
+	</tr>
+	<tr>
 		<td>HPP</td>
 		<td>:</td>
-		<td>Rp {{ number_format($model->cost_of_good) }}</td>
+		<td>Rp {{ number_format($model->cost) }}</td>
 	</tr>
 	<tr>
 		<td>Harga Jual</td>

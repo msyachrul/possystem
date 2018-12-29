@@ -30,7 +30,6 @@ class GoodController extends Controller
     {
         return [
             'name' => 'required|string|max:50',
-            'cost' => 'required|numeric|min:0',
             'price' => 'required|numeric|min:0',
             'good_category_id' => 'required|integer',
             'vendor_id' => 'required|integer',
@@ -162,10 +161,10 @@ class GoodController extends Controller
 
         return DataTables::of($model)
             ->addIndexColumn()
-            ->addColumn('vendor_name', function ($model) {
+            ->addColumn('vendor', function ($model) {
                 return $model->vendor->name;
             })
-            ->addColumn('category_name', function ($model) {
+            ->addColumn('category', function ($model) {
                 return $model->goodCategory->name;
             })
             ->editColumn('cost', function ($model) {

@@ -25,7 +25,7 @@ class CreateSaleDetailsTable extends Migration
             $table->string('sale_number');
             $table->foreign('sale_number')->references('number')->on('sales')->onDelete('restrict');
             $table->string('good_barcode');
-            $table->foreign('good_barcode')->references('barcode')->on('goods')->onDelete('restrict');
+            $table->foreign('good_barcode')->references('barcode')->on('goods')->onUpdate('cascade')->onDelete('restrict');
         });
     }
 

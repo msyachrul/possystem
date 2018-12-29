@@ -15,6 +15,7 @@ class GoodsTableSeeder extends Seeder
         	[
         		'barcode' => '010001',
         		'name' => 'Keripik',
+                'qty' => 10,
         		'cost' => 8900,
         		'price' => 15000,
         		'good_category_id' => 1, 
@@ -23,6 +24,7 @@ class GoodsTableSeeder extends Seeder
         	[
         		'barcode' => '010002',
         		'name' => 'Mie Lidi',
+                'qty' => 10,
         		'cost' => 8100,
         		'price' => 15000,
         		'good_category_id' => 1, 
@@ -31,6 +33,7 @@ class GoodsTableSeeder extends Seeder
         	[
         		'barcode' => '010003',
         		'name' => 'Seblak',
+                'qty' => 10,
         		'cost' => 7000,
         		'price' => 15000,
         		'good_category_id' => 1, 

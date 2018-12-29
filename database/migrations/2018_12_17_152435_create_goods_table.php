@@ -17,7 +17,8 @@ class CreateGoodsTable extends Migration
             $table->increments('id');
             $table->string('barcode',9)->unique();
             $table->string('name',50);
-            $table->decimal('cost',16,0);
+            $table->decimal('qty',10,0)->default(0);
+            $table->decimal('cost',16,0)->default(0);
             $table->decimal('price',16,0);
             $table->timestamps();
             $table->softDeletes();
