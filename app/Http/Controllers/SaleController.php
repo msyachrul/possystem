@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Sale;
+use App\SaleDetail;
 use App\Good;
 use DataTables;
-use Exception;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
@@ -19,6 +19,10 @@ class SaleController extends Controller
         }
 
         $model = Good::where('barcode',$search[1])->orWhere('name',$search[1])->firstOrFail();
+
+        if ($model->qty < $search[0]) {
+            abort(403);
+        }
 
         return view('sales.good',[
             'qty' => $search[0],
@@ -61,23 +65,30 @@ class SaleController extends Controller
             $number .= sprintf('%04d',$no++);
         } while (Sale::where('number', $number)->first());
 
-        $model = Sale::create([
+        for ($i=0; $i < count($request->barcode); $i++) { 
+            $good = Good::where('barcode',$request->barcode[$i])->firstOrFail();
+            if ($good->qty < $request->qty[$i]) {
+                abort(403,'Jumlah Terlalu besar!');
+            }
+            else {
+                $qty = $good->qty - $request->qty[$i];
+
+                SaleDetail::create([
+                    'good_barcode' => $request->barcode[$i],
+                    'price' => $request->price[$i],
+                    'qty' => $request->qty[$i],
+                    'sale_number' => $number,
+                ])->good()->update([
+                    'qty' => $qty,
+                ]);
+
+            }
+        }
+
+        Sale::create([
             'number' => $number,
             'total' => array_sum($request->subtotal),
         ]);
-
-        for ($i=0; $i < count($request->barcode); $i++) { 
-            $good = Good::where('barcode',$request->barcode[$i])->firstOrFail();
-            $qty = $good->qty - $request->qty[$i];
-
-            $model->saleDetails()->create([
-                'good_barcode' => $request->barcode[$i],
-                'price' => $request->price[$i],
-                'qty' => $request->qty[$i],
-            ])->good()->update([
-                'qty' => $qty,
-            ]);
-        }
     }
 
     /**

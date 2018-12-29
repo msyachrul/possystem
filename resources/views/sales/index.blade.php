@@ -98,10 +98,11 @@
 						$('#total').text(numberWithCommas(total));
 					},
 					error: function (xhr) {
+						title = xhr.status == 404 ? 'Barang tidak ditemukan!' : 'Jumlah terlalu besar!';
 						swal({
 							'type': 'error',
 							'title': 'Error!',
-							'text': 'Barang tidak ditemukan!',
+							'text': title,
 						});
 					}
 				});

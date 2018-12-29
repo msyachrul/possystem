@@ -57,12 +57,20 @@ $('.modal .btn-save').click(function (event) {
 		},
 		error: function (xhr) {
 			let res = xhr.responseJSON;
-			if($.isEmptyObject(res) == false) {
+
+			if($.isEmptyObject(res.errors) == false) {
 				$.each(res.errors, function (key, value) {
 					$('#' + key).addClass('is-invalid').after('<div class="invalid-feedback">' + value + '</div>')
 				});
 			}
-
+			else {
+				swal({
+					'type': 'error',
+					'title': 'Error!',
+					'text': res.message,
+				});
+				$('.modal').modal('hide');
+			}
 		},
 	});
 });
