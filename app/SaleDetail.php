@@ -9,7 +9,7 @@ class SaleDetail extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['price', 'qty','sale_number', 'good_barcode'];
+    protected $fillable = ['price', 'qty', 'sale_number', 'good_barcode'];
 
     protected $dates = ['deleted_at'];
 

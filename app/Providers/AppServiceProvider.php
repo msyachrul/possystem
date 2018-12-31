@@ -13,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-    {
+    {        
         Schema::defaultStringLength(191);
     }
 
@@ -24,8 +24,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(\Faker\Generator::class, function () {
-            return \Faker\Factory::create('id_ID');
-        });
+        // 
     }
 }

@@ -65,6 +65,11 @@ class SaleController extends Controller
             $number .= sprintf('%04d',$no++);
         } while (Sale::where('number', $number)->first());
 
+        $model = Sale::create([
+            'number' => $number,
+            'total' => array_sum($request->subtotal),
+        ]);        
+
         for ($i=0; $i < count($request->barcode); $i++) { 
             $good = Good::where('barcode',$request->barcode[$i])->firstOrFail();
             if ($good->qty < $request->qty[$i]) {
@@ -73,22 +78,16 @@ class SaleController extends Controller
             else {
                 $qty = $good->qty - $request->qty[$i];
 
-                SaleDetail::create([
+                $model->saleDetails()->create([
                     'good_barcode' => $request->barcode[$i],
                     'price' => $request->price[$i],
                     'qty' => $request->qty[$i],
-                    'sale_number' => $number,
                 ])->good()->update([
                     'qty' => $qty,
                 ]);
-
             }
         }
 
-        Sale::create([
-            'number' => $number,
-            'total' => array_sum($request->subtotal),
-        ]);
     }
 
     /**

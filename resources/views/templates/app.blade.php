@@ -46,7 +46,7 @@
 	<nav class="main-menu">
 		<ul>
 			<li>
-				<a href="#"><i class="fa fa-shopping-cart fa-custom fa-2x"></i><span class="nav-text"><b>{{ config('app.name') }}</b></span></a>
+				<a href="{{ route('dashboard.index') }}"><i class="fa fa-shopping-cart fa-custom fa-2x"></i><span class="nav-text"><b>{{ config('app.name') }}</b></span></a>
 			</li>
 			<br>
 			<li>
@@ -63,6 +63,9 @@
 			</li>
 			<li>
 				<a href="{{ route('sale.index') }}"><i class="fa fa-shopping-cart fa-custom fa-2x"></i><span class="nav-text">Penjualan</span></a>
+			</li>
+			<li>
+				<a href="{{ route('transaction.index') }}"><i class="fa fa-table fa-custom fa-2x"></i><span class="nav-text">Laporan Transaksi</span></a>
 			</li>
 		</ul>
 		<ul class="logout">

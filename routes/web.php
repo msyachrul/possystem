@@ -11,10 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    // return view('welcome');
-    return redirect()->route('vendor.index');
-});
+Route::get('/', 'DashboardController@index')->name('dashboard.index');
 
 Route::resource('/vendor', 'VendorController');
 Route::get('/api/vendor', 'VendorController@vendorApi')->name('vendor.api');
@@ -38,3 +35,6 @@ Route::resource('/sale', 'SaleController')->except([
 ]);
 Route::post('/sale/cart', 'SaleController@cart')->name('sale.cart');
 Route::get('/api/sale', 'SaleController@saleApi')->name('sale.api');
+
+Route::get('/transaction', 'TransactionController@index')->name('transaction.index');
+Route::get('/api/transaction', 'TransactionController@apiTransaction')->name('transaction.api');
