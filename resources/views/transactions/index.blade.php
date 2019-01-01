@@ -15,9 +15,10 @@
 							<th width="1%">#</th>
 							<th>No Transaksi</th>
 							<th>Qty</th>
-							<th>HPP</th>
-							<th>Harga Jual</th>
+							<th>Total HPP</th>
+							<th>Total Harga Jual</th>
 							<th>Profit</th>
+							<th width="5%"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -42,7 +43,11 @@
 				{data: 'total_hpp', name: 'total_hpp'},
 				{data: 'total_price', name: 'total_price'},
 				{data: 'profit', name: 'profit'},
+				{data: 'action', name: 'action', orderable: false, searchable: false},
 			],
+			columnDefs: [
+				{targets: [2, 3, 4, 5], className: 'text-right'},
+			]
 		});
 	</script>
 @endpush

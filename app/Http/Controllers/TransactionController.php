@@ -14,6 +14,12 @@ class TransactionController extends Controller
     	return view('transactions.index');
     }
 
+    public function show($id)
+    {
+        $transactionDetails = ViewSaleTransaction::where('number',$id)->get();
+        return view('transactions.show',compact('transactionDetails'));
+    }
+
     public function apiTransaction()
     {
     	$model = ViewSaleTransaction::query()->select('number', DB::raw('sum(qty) as qty'), DB::raw('sum(total_hpp) as total_hpp'), DB::raw('sum(total_price) as total_price'), DB::raw('sum(profit) as profit'))->groupBy('number');
@@ -28,6 +34,12 @@ class TransactionController extends Controller
             })
             ->editColumn('profit', function ($model) {
                 return 'Rp '. number_format($model->profit);
+            })
+            ->addColumn('action', function ($model) {
+                return view('templates._action',[
+                    'model' => $model->number,
+                    'url_show' => route('transaction.show', $model->number),
+                ]);
             })
     		->make();
     }

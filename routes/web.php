@@ -37,4 +37,5 @@ Route::post('/sale/cart', 'SaleController@cart')->name('sale.cart');
 Route::get('/api/sale', 'SaleController@saleApi')->name('sale.api');
 
 Route::get('/transaction', 'TransactionController@index')->name('transaction.index');
+Route::get('/transaction/{id}', 'TransactionController@show')->name('transaction.show');
 Route::get('/api/transaction', 'TransactionController@apiTransaction')->name('transaction.api');

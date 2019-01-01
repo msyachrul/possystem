@@ -35,12 +35,14 @@
 			</a>
 		</div>
 		<div class="col-sm">
-			<div class="card text-danger">
-				<div class="card-body">
-					<h6 class="card-title"><i class="fa fa-suitcase"></i> Keuntungan {{ date('F Y') }}</h6>
-					<h4 class="card-text">Rp {{ number_format($model['profit']) }}</h4>
+			<a href="{{ route('transaction.index') }}">
+				<div class="card text-danger">
+					<div class="card-body">
+						<h6 class="card-title"><i class="fa fa-suitcase"></i> Keuntungan {{ date('F Y') }}</h6>
+						<h4 class="card-text">Rp {{ number_format($model['profit']) }}</h4>
+					</div>
 				</div>
-			</div>	
+			</a>
 		</div>
 	</div>
 @endsection
