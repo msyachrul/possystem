@@ -24,7 +24,7 @@ class SaleController extends Controller
             abort(403);
         }
 
-        return view('sales.good',[
+        return view('sales.cart',[
             'qty' => $search[0],
             'model' => $model,
         ]);   

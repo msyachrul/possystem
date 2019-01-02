@@ -9,7 +9,7 @@
 		</div>
 		<div class="card-body">
 			<div class="table-responsive">
-				<table id="table-good-category" class="table table-stripped" width="100%">
+				<table id="table-good" class="table table-stripped" width="100%">
 					<thead>
 						<th width="1%">#</th>
 						<th>Barcode</th>
@@ -29,7 +29,7 @@
 
 @push('scripts')
 	<script>
-		$('#table-good-category').DataTable({
+		$('#table-good').DataTable({
 			responsive: true,
 			processing: true,
 			serverSide: true,

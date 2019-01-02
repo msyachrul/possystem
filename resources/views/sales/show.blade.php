@@ -20,4 +20,12 @@
 			</tr>
 		@endforeach
 	</tbody>
+	<tfoot>
+		<tr>
+			<th colspan="2">Total</th>
+			<th class="text-right">Rp {{ number_format(array_sum(array_column($saleDetails->toArray(), 'price'))) }}</th>
+			<th class="text-right">{{ number_format(array_sum(array_column($saleDetails->toArray(), 'qty'))) }}</th>
+			<th class="text-right">Rp {{ number_format($saleDetails->first()->sale->total) }}</th>
+		</tr>
+	</tfoot>
 </table>

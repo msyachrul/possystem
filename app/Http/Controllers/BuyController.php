@@ -23,7 +23,7 @@ class BuyController extends Controller
     public function cart(Request $request)
     {
         $model = Good::where('barcode',$request->barcode)->firstOrFail();
-        return view('buys.good',[
+        return view('buys.cart',[
             'model' => $model,
             'cost' => $request->cost,
             'qty' => $request->qty,
