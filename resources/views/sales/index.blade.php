@@ -1,11 +1,11 @@
 @extends('templates.app')
 
-@push('title','Penjualan')
+@push('title','Daftar Penjualan')
 
 @section('content')
 	<div class="card">
 		<div class="card-header">
-			<h1 class="card-title">Penjualan</h1>
+			<h1 class="card-title">Daftar Penjualan</h1>
 		</div>
 		<div class="card-body">
 			<div class="table-responsive">

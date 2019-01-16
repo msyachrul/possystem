@@ -2,17 +2,7 @@
 	font-size: 2em;
 }
 
-.fa-custom {
-	position: relative;
-	display: table-cell;
-	width: 60px;
-	height: 36px;
-	text-align: center;
-	vertical-align: middle;
-	font-size: 20px;
-}
-
-.main-menu:hover,nav.main-menu.expanded {
+.main-menu:hover, nav.main-menu.expanded {
 	width: 250px;
 	overflow: visible;
 }
@@ -29,14 +19,14 @@
 	overflow: hidden;
 	transition: width 0.5s linear;
 	z-index: 1000;
-	-webkit-transform:translateZ(0) scale(1,1);
+	-webkit-transform: translateZ(0) scale(1,1);
 }
 
 .main-menu > ul {
 	margin: 7px 0;
 }
 
-.main-menu li {
+.main-menu li a {
 	position: relative;
 	display: block;
 	width: 250px;
@@ -44,33 +34,32 @@
 
 .main-menu li a {
 	position: relative;
-	display: table;
+	padding: 5px 0;
 	border-color: collapse;
 	border-spacing: 0;
 	color: #999;
-	font-family: arial;
+	font-family: tahoma;
 	font-size: 14px;
 	text-decoration: none;
-	-webkit-transform:translateZ(0)scale(1,1);
+	-webkit-transform: translateZ(0)scale(1,1);
 	transition: all .1s linear;
 }
 
 .main-menu .nav-icon {
-	position: relative;
-	display: table-cell;
 	width: 60px;
-	height: 36px;
-	text-align: center;
-	vertical-align: middle;
 	font-size: 18px;
+	text-align: center;
 }
 
-.main-menu .nav-text {
-	position: relative;
-	display: table-cell;
-	vertical-align: middle;
-	width: 190px;
-	font-family: tahoma;
+.sub-menu {
+	overflow: hidden;
+	max-height: 0;
+	transition: max-height 0.3s linear;
+}
+
+.sub-menu li i {
+	margin-left: 40px;
+	margin-right: 20px;
 }
 
 .main-menu ul.logout {
@@ -88,7 +77,7 @@
 	overflow: visible;
 }
 
-a:hover,a:focus {
+a:hover, a:focus {
 	text-decoration: none;
 }
 
@@ -96,16 +85,20 @@ nav {
 	user-select: none;
 }
 
-nav ul,nav li {
+nav ul, nav li {
 	outline: 0;
 	margin: 0;
 	padding: 0;
 }
 
-.main-menu li:hover a, nav.main-menu li.active a, .dropdown-menu li a:hover, .dropdown-menu li a:focus, .dropdown-menu .active a, .dropdown-menu .active a:focus, .no-touch .dashboard-page nav.dashboard-menu ul li:hover a, .dashboard-page nav.dashboard-menu ul li.active a {
+.main-menu li a:hover, nav.main-menu li.active a, .no-touch .dashboard-page nav.dashboard-menu ul li:hover a, .dashboard-page nav.dashboard-menu ul li.active a {
 	color: white;
 	background-color: #5fa2db;
 
+}
+
+li:target .sub-menu {
+	max-height: 10em;
 }
 
 .content-area {

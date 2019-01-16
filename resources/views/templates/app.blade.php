@@ -46,31 +46,36 @@
 	<nav class="main-menu">
 		<ul>
 			<li>
-				<a href="{{ route('dashboard.index') }}"><i class="fa fa-shopping-cart fa-custom fa-2x"></i><span class="nav-text"><b>{{ config('app.name') }}</b></span></a>
+				<a href="{{ route('dashboard.index') }}"><i class="fa fa-shopping-cart nav-icon fa-2x"></i><b>{{ config('app.name') }}</b></a>
 			</li>
 			<br>
-			<li>
-				<a href="{{ route('good_category.index') }}"><i class="fa fa-list fa-custom fa-2x"></i><span class="nav-text">Kategori</span></a>
+			<li id="master">
+				<a href="#master"><i class="fa fa-list nav-icon fa-2x"></i>Data Master</a>
+				<ul class="sub-menu">
+					<li><a href="{{ route('vendor.index') }}"><i class="fa fa-chevron-right"></i>Vendor</a></li>
+					<li><a href="{{ route('good_category.index') }}"><i class="fa fa-chevron-right"></i>Kategori</a></li>
+					<li><a href="{{ route('good.index') }}"><i class="fa fa-chevron-right"></i>Barang</a></li>
+				</ul>
 			</li>
 			<li>
-				<a href="{{ route('vendor.index') }}"><i class="fa fa-address-card fa-custom fa-2x"></i><span class="nav-text">Vendor</span></a>
+				<a href="{{ route('buy.index') }}"><i class="fa fa-cart-plus nav-icon fa-2x"></i>Pembelian</a>
 			</li>
 			<li>
-				<a href="{{ route('good.index') }}"><i class="fa fa-shopping-bag fa-custom fa-2x"></i><span class="nav-text">Barang</span></a>
+				<a href="{{ route('sale.index') }}"><i class="fa fa-shopping-cart nav-icon fa-2x"></i>Penjualan</a>
 			</li>
-			<li>
-				<a href="{{ route('buy.index') }}"><i class="fa fa-cart-plus fa-custom fa-2x"></i><span class="nav-text">Pembelian</span></a>
-			</li>
-			<li>
-				<a href="{{ route('sale.index') }}"><i class="fa fa-shopping-cart fa-custom fa-2x"></i><span class="nav-text">Penjualan</span></a>
-			</li>
-			<li>
-				<a href="{{ route('transaction.index') }}"><i class="fa fa-table fa-custom fa-2x"></i><span class="nav-text">Laporan Transaksi</span></a>
+			<li id="report">
+				<a href="#report"><i class="fa fa-table nav-icon fa-2x"></i>Laporan</a>
+				<ul class="sub-menu">
+					<li><a href="#"><i class="fa fa-chevron-right"></i>Persediaan</a></li>
+					<li><a href="#"><i class="fa fa-chevron-right"></i>Pembelian</a></li>
+					<li><a href="#"><i class="fa fa-chevron-right"></i>Penjualan</a></li>
+					<li><a href="{{ route('transaction.index') }}"><i class="fa fa-chevron-right"></i>Transaksi</a></li>
+				</ul>
 			</li>
 		</ul>
 		<ul class="logout">
 			<li>
-				<a href="#"><i class="fa fa-power-off fa-custom fa-2x"></i><span class="nav-text">Logout</span></a>
+				<a href="#"><i class="fa fa-power-off nav-icon fa-2x"></i>Logout</a>
 			</li>
 		</ul>
 	</nav>

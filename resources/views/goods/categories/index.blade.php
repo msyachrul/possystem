@@ -5,7 +5,7 @@
 @section('content')
 	<div class="card">
 		<div class="card-header">
-			<h1 class="card-title">Master Kategori Barang</h1>
+			<h1 class="card-title">Master Kategori</h1>
 		</div>
 		<div class="card-body">
 			<div class="table-responsive">
