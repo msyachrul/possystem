@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Sale;
 use App\SaleDetail;
 use App\Good;
+use DB;
 use DataTables;
 use Illuminate\Http\Request;
 
@@ -28,6 +29,11 @@ class SaleController extends Controller
             'qty' => $search[0],
             'model' => $model,
         ]);   
+    }
+
+    public function salesQuery()
+    {
+        return SaleDetail::join('goods','sale_details.good_barcode','goods.barcode')->select(['sale_details.id as id', 'sale_details.sale_number as number', DB::raw('CONCAT(goods.barcode, " - ", goods.name) as name'), 'sale_details.price as price', 'sale_details.qty as qty', DB::raw('sale_details.price * sale_details.qty as subtotal')]);
     }
     /**
      * Display a listing of the resource.
@@ -136,6 +142,11 @@ class SaleController extends Controller
         //
     }
 
+    public function report()
+    {
+        return view('sales.report');
+    }
+
     public function saleApi()
     {
         $model = Sale::query();
@@ -152,6 +163,21 @@ class SaleController extends Controller
                     // 'url_edit' => route('buy.edit', $model->id),
                     // 'url_destroy' => route('buy.destroy', $model->id),
                 ]);
+            })
+            ->make(true);
+    }
+
+    public function reportApi()
+    {
+        $model = $this->salesQuery();
+
+        return DataTables::of($model)
+            ->addIndexColumn()
+            ->editColumn('price', function ($model) {
+                return "Rp " . number_format($model->price);
+            })
+            ->editColumn('subtotal', function ($model) {
+                return "Rp " . number_format($model->subtotal);
             })
             ->make(true);
     }

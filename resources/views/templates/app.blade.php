@@ -68,7 +68,7 @@
 				<ul class="sub-menu">
 					<li><a href="#"><i class="fa fa-chevron-right"></i>Persediaan</a></li>
 					<li><a href="#"><i class="fa fa-chevron-right"></i>Pembelian</a></li>
-					<li><a href="#"><i class="fa fa-chevron-right"></i>Penjualan</a></li>
+					<li><a href="{{ route('report.sale') }}"><i class="fa fa-chevron-right"></i>Penjualan</a></li>
 					<li><a href="{{ route('transaction.index') }}"><i class="fa fa-chevron-right"></i>Transaksi</a></li>
 				</ul>
 			</li>
