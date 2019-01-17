@@ -25,8 +25,6 @@ class CreateGoodsTable extends Migration
         });
 
         Schema::table('goods', function (Blueprint $table) {
-            $table->unsignedInteger('vendor_id');
-            $table->foreign('vendor_id')->references('id')->on('vendors')->onUpdate('cascade')->onDelete('restrict');
             $table->unsignedInteger('good_category_id');
             $table->foreign('good_category_id')->references('id')->on('good_categories')->onUpdate('cascade')->onDelete('restrict');
         });

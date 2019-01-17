@@ -32,7 +32,6 @@ class GoodController extends Controller
             'name' => 'required|string|max:50',
             'price' => 'required|numeric|min:0',
             'good_category_id' => 'required|integer',
-            'vendor_id' => 'required|integer',
         ];
     }
 
@@ -48,17 +47,6 @@ class GoodController extends Controller
         return $modelCategories;
     }
 
-    protected function vendors()
-    {
-        $vendors = Vendor::orderBy('name')->get();
-        $modelVendors = [];
-
-        foreach ($vendors as $vendor) {
-            $modelVendors[$vendor->id] = $vendor->name;
-        }
-
-        return $modelVendors;
-    }
     /**
      * Display a listing of the resource.
      *
@@ -79,7 +67,6 @@ class GoodController extends Controller
         return view('goods.form',[
             'model' => new Good(),
             'modelCategories' => $this->categories(),
-            'modelVendors' => $this->vendors(),
         ]);
     }
 
@@ -120,7 +107,6 @@ class GoodController extends Controller
         return view('goods.form',[
             'model' => Good::findOrFail($id),
             'modelCategories' => $this->categories(),
-            'modelVendors' => $this->vendors(),
         ]);
     }
 
@@ -161,9 +147,6 @@ class GoodController extends Controller
 
         return DataTables::of($model)
             ->addIndexColumn()
-            ->addColumn('vendor', function ($model) {
-                return $model->vendor->name;
-            })
             ->addColumn('category', function ($model) {
                 return $model->goodCategory->name;
             })

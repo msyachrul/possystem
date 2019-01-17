@@ -20,6 +20,11 @@ class CreateBuysTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        Schema::table('buys', function (Blueprint $table) {
+            $table->unsignedInteger('vendor_id');
+            $table->foreign('vendor_id')->references('id')->on('vendors')->onUpdate('cascade')->onDelete('restrict');
+        });
     }
 
     /**

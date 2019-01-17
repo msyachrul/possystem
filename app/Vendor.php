@@ -13,8 +13,4 @@ class Vendor extends Model
 
     protected $dates = ['deleted_at'];
 
-    public function goods()
-    {
-    	return $this->hasMany('App\Good');
-    }
 }

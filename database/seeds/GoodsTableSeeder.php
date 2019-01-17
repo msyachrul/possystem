@@ -19,7 +19,6 @@ class GoodsTableSeeder extends Seeder
         		'cost' => 8900,
         		'price' => 15000,
         		'good_category_id' => 1, 
-        		'vendor_id' => 3,
         	],
         	[
         		'barcode' => '010002',
@@ -28,7 +27,6 @@ class GoodsTableSeeder extends Seeder
         		'cost' => 8100,
         		'price' => 15000,
         		'good_category_id' => 1, 
-        		'vendor_id' => 6,
         	],
         	[
         		'barcode' => '010003',
@@ -37,7 +35,6 @@ class GoodsTableSeeder extends Seeder
         		'cost' => 7000,
         		'price' => 15000,
         		'good_category_id' => 1, 
-        		'vendor_id' => 2,
         	],
         ];
 

@@ -15,7 +15,6 @@
 						<th>Barcode</th>
 						<th>Nama</th>
 						<th>Kategori</th>
-						<th>Vendor</th>
 						<th>Qty</th>
 						<th>HPP</th>
 						<th>Harga Jual</th>
@@ -39,15 +38,13 @@
 				{data: 'barcode', name: 'barcode'},
 				{data: 'name', name: 'name'},
 				{data: 'category', name: 'category'},
-				{data: 'vendor', name: 'vendor'},
 				{data: 'qty', name: 'qty'},
 				{data: 'cost', name: 'cost'},
 				{data: 'price', name: 'price'},
-				{data: 'action', name: 'action'},
+				{data: 'action', name: 'action', orderable: false, searchable: false},
 			],
 			columnDefs: [
-				{targets: [5, 6, 7], className: 'text-right'},
-				{targets: 8, orderable: false},
+				{targets: [4, 5, 6], className: 'text-right'},
 			
 			],
 		});
