@@ -14,17 +14,15 @@ class CreateViewSaleTransactions extends Migration
      */
     public function up()
     {
-        DB::statement('DROP VIEW view_sale_transactions');
-        
         DB::statement('CREATE VIEW view_sale_transactions as SELECT 
                 sale_details.sale_number as `number`,
-                goods.barcode as `barcode`,
+                CONCAT(goods.barcode, " - ",goods.name) as `name`,
                 goods.cost as `cost`,
                 sale_details.price as `price`,
                 sale_details.qty as `qty`,
-                goods.cost * sale_details.qty as `total_hpp`,
-                sale_details.price * sale_details.qty as `total_price`,
-                (sale_details.price * sale_details.qty) - (goods.cost * sale_details.qty) as `profit` 
+                goods.cost * sale_details.qty as `cost_total`,
+                sale_details.price * sale_details.qty as `price_total`,
+                (sale_details.price * sale_details.qty) - (goods.cost * sale_details.qty) as `profit_total` 
             FROM sale_details JOIN goods ON sale_details.good_barcode = goods.barcode');
     }
 

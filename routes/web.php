@@ -36,11 +36,13 @@ Route::resource('/sale', 'SaleController')->except([
 Route::post('/sale/cart', 'SaleController@cart')->name('sale.cart');
 Route::get('/api/sale', 'SaleController@saleApi')->name('sale.api');
 
-Route::get('/transaction', 'TransactionController@index')->name('transaction.index');
-Route::get('/transaction/{id}', 'TransactionController@show')->name('transaction.show');
-Route::get('/api/transaction', 'TransactionController@apiTransaction')->name('transaction.api');
-
 Route::prefix('report')->name('report.')->group(function () {
-	Route::get('/sale', 'SaleController@report')->name('sale');
-	Route::get('/sale/api', 'SaleController@reportApi')->name('saleApi');
+	Route::get('/stock', 'ReportController@stock')->name('stock');
+	Route::get('/stock/api', 'ReportController@apiStock')->name('stock.api');
+	Route::get('/buy', 'ReportController@buy')->name('buy');
+	Route::get('/buy/api', 'ReportController@apiBuy')->name('buy.api');
+	Route::get('/sale', 'ReportController@sale')->name('sale');
+	Route::get('/sale/api', 'ReportController@apiSale')->name('sale.api');
+	Route::get('/transaction', 'ReportController@transaction')->name('transaction');
+	Route::get('/transaction/api', 'ReportController@apiTransaction')->name('transaction.api');
 });

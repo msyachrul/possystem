@@ -14,11 +14,9 @@
 						<tr>
 							<th width="1%">#</th>
 							<th>No Transaksi</th>
-							<th>Qty</th>
 							<th>Total HPP</th>
-							<th>Total Harga Jual</th>
+							<th>Total Penjualan</th>
 							<th>Profit</th>
-							<th width="5%"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -35,19 +33,18 @@
 			responsive: true,
 			processing: true,
 			serverSide: true,
-			ajax : "{{ route('transaction.api') }}",
+			ajax : "{{ route('report.transaction.api') }}",
 			columns: [
-				{data: 'DT_RowIndex', name: 'number'},
+				{data: 'DT_RowIndex', orderable: false, searchable: false},
 				{data: 'number', name: 'number'},
-				{data: 'qty', name: 'qty'},
-				{data: 'total_hpp', name: 'total_hpp'},
-				{data: 'total_price', name: 'total_price'},
-				{data: 'profit', name: 'profit'},
-				{data: 'action', name: 'action', orderable: false, searchable: false},
+				{data: 'cost_total', name: 'cost_total'},
+				{data: 'price_total', name: 'price_total'},
+				{data: 'profit_total', name: 'profit_total'},
 			],
 			columnDefs: [
-				{targets: [2, 3, 4, 5], className: 'text-right'},
-			]
+				{targets: [2, 3, 4], className: 'text-right'}
+			],
+			order: [[1, 'asc']],
 		});
 	</script>
 @endpush

@@ -31,10 +31,6 @@ class SaleController extends Controller
         ]);   
     }
 
-    public function salesQuery()
-    {
-        return SaleDetail::join('goods','sale_details.good_barcode','goods.barcode')->select(['sale_details.id as id', 'sale_details.sale_number as number', DB::raw('CONCAT(goods.barcode, " - ", goods.name) as name'), 'sale_details.price as price', 'sale_details.qty as qty', DB::raw('sale_details.price * sale_details.qty as subtotal')]);
-    }
     /**
      * Display a listing of the resource.
      *
@@ -68,8 +64,10 @@ class SaleController extends Controller
         do {
             $number = '01';
             $number .= date('Ymd');
-            $number .= sprintf('%04d',$no++);
+            $number .= sprintf('%04d', $no++);
         } while (Sale::where('number', $number)->first());
+
+        DB::beginTransaction();
 
         $model = Sale::create([
             'number' => $number,
@@ -77,9 +75,10 @@ class SaleController extends Controller
         ]);        
 
         for ($i=0; $i < count($request->barcode); $i++) { 
-            $good = Good::where('barcode',$request->barcode[$i])->firstOrFail();
+            $good = Good::where('barcode', $request->barcode[$i])->firstOrFail();
             if ($good->qty < $request->qty[$i]) {
-                abort(403,'Jumlah Terlalu besar!');
+                abort(403, 'Jumlah Terlalu besar!');
+                DB::rollBack();
             }
             else {
                 $qty = $good->qty - $request->qty[$i];
@@ -91,9 +90,9 @@ class SaleController extends Controller
                 ])->good()->update([
                     'qty' => $qty,
                 ]);
+                DB::commit();
             }
         }
-
     }
 
     /**
@@ -106,45 +105,6 @@ class SaleController extends Controller
     {
         $saleDetails = \App\SaleDetail::where('sale_number',$id)->get();
         return view('sales.show',compact('saleDetails'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Sale  $sale
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Sale  $sale
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Sale  $sale
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
-    public function report()
-    {
-        return view('sales.report');
     }
 
     public function saleApi()
@@ -160,24 +120,7 @@ class SaleController extends Controller
                 return view('templates._action', [
                     'model' => $model->number,
                     'url_show' => route('sale.show', $model->number),
-                    // 'url_edit' => route('buy.edit', $model->id),
-                    // 'url_destroy' => route('buy.destroy', $model->id),
                 ]);
-            })
-            ->make(true);
-    }
-
-    public function reportApi()
-    {
-        $model = $this->salesQuery();
-
-        return DataTables::of($model)
-            ->addIndexColumn()
-            ->editColumn('price', function ($model) {
-                return "Rp " . number_format($model->price);
-            })
-            ->editColumn('subtotal', function ($model) {
-                return "Rp " . number_format($model->subtotal);
             })
             ->make(true);
     }

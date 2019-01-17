@@ -66,10 +66,10 @@
 			<li id="report">
 				<a href="#report"><i class="fa fa-table nav-icon fa-2x"></i>Laporan</a>
 				<ul class="sub-menu">
-					<li><a href="#"><i class="fa fa-chevron-right"></i>Persediaan</a></li>
-					<li><a href="#"><i class="fa fa-chevron-right"></i>Pembelian</a></li>
+					<li><a href="{{ route('report.stock') }}"><i class="fa fa-chevron-right"></i>Persediaan</a></li>
+					<li><a href="{{ route('report.buy') }}"><i class="fa fa-chevron-right"></i>Pembelian</a></li>
 					<li><a href="{{ route('report.sale') }}"><i class="fa fa-chevron-right"></i>Penjualan</a></li>
-					<li><a href="{{ route('transaction.index') }}"><i class="fa fa-chevron-right"></i>Transaksi</a></li>
+					<li><a href="{{ route('report.transaction') }}"><i class="fa fa-chevron-right"></i>Transaksi</a></li>
 				</ul>
 			</li>
 		</ul>
