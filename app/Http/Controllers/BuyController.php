@@ -62,7 +62,7 @@ class BuyController extends Controller
 
         do {
             $number = '02';
-            $number .= date('dmy');
+            $number .= date('Ymd');
             $number .= sprintf('%04d',$no++);
         } while (Buy::where('number', $number)->first());
 

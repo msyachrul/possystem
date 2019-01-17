@@ -67,7 +67,7 @@ class SaleController extends Controller
 
         do {
             $number = '01';
-            $number .= date('dmy');
+            $number .= date('Ymd');
             $number .= sprintf('%04d',$no++);
         } while (Sale::where('number', $number)->first());
 
