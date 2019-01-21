@@ -23,6 +23,9 @@
 	<!-- Font Awesome -->
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/font-awesome/css/all.min.css') }}">
 
+	<!-- Select2 -->
+	<link rel="stylesheet" type="text/css" href="{{ asset('assets/vendor/select2/css/select2.min.css') }}">
+
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 	<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/ie10-viewport-bug-workaround.css') }}">
 
@@ -97,6 +100,9 @@
 
 	<!-- Sweetalert2 -->
 	<script src="{{ asset('assets/vendor/sweetalert2/sweetalert2.all.min.js') }}"></script>
+
+	<!-- Select2 -->
+	<script src="{{ asset('assets/vendor/select2/js/select2.min.js') }}"></script>
 
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 	<script src="{{ asset('assets/js/ie10-viewport-bug-workaround.js') }}"></script>

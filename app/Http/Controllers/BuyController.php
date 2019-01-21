@@ -152,4 +152,14 @@ class BuyController extends Controller
             })
             ->make(true);
     }
+
+    public function apiVendor(Request $request)
+    {
+        $data = Vendor::select(['id', 'name'])->where('name', 'LIKE', "%{$request->get('name')}%")->paginate(5);
+
+        return response()->json([
+            'items' => $data->toArray()['data'],
+            'pagination' => $data->nextPageUrl() ? true : false,
+        ]);
+    }
 }
