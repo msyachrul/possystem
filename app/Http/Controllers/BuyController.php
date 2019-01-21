@@ -10,25 +10,6 @@ use Illuminate\Http\Request;
 
 class BuyController extends Controller
 {
-    public function getVendorGoods(Request $request)
-    {
-        return Good::where('vendor_id',$request->vendorId)->get();
-    }
-
-    public function getGood(Request $request)
-    {
-        return Good::where('barcode',$request->barcode)->first();
-    }
-
-    public function cart(Request $request)
-    {
-        $model = Good::where('barcode',$request->barcode)->firstOrFail();
-        return view('buys.cart',[
-            'model' => $model,
-            'cost' => $request->cost,
-            'qty' => $request->qty,
-        ]);
-    }
     /**
      * Display a listing of the resource.
      *
@@ -99,40 +80,6 @@ class BuyController extends Controller
         return view('buys.show',compact('buyDetails'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Buy  $buy
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Buy  $buy
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Buy  $buy
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
     public function buyApi()
     {
         $model = Buy::query();
@@ -155,7 +102,17 @@ class BuyController extends Controller
 
     public function apiVendor(Request $request)
     {
-        $data = Vendor::select(['id', 'name'])->where('name', 'LIKE', "%{$request->get('name')}%")->paginate(5);
+        $data = Vendor::select(['id', 'name'])->where('name', 'LIKE', "%{$request->get('name')}%")->paginate(10);
+
+        return response()->json([
+            'items' => $data->toArray()['data'],
+            'pagination' => $data->nextPageUrl() ? true : false,
+        ]);
+    }
+
+    public function apiGood(Request $request)
+    {
+        $data = Good::select(['barcode', 'name', 'cost'])->where('barcode', 'LIKE', "{$request->get('search')}%")->orWhere('name', 'LIKE', "{$request->get('search')}%")->paginate(10);
 
         return response()->json([
             'items' => $data->toArray()['data'],
