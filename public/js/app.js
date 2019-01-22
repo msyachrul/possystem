@@ -4,10 +4,6 @@ function numberWithCommas(number) {
     return parts.join(".");
 }
 
-$('body').on('submit', 'form', function (event) {
-	event.preventDefault();
-})
-
 $('body').on('click', '.modal-show', function () {
 	let me = $(this),
 		url = me.data('href'),
@@ -32,6 +28,8 @@ $('body').on('click', '.modal-show', function () {
 });
 
 $('.modal .btn-save').click(function (event) {
+	event.preventDefault();
+
 	let form = $('#main-form'),
 		url = form.attr('action'),
 		method = $('input[name=_method]').val() == undefined ? 'POST' : 'PUT',

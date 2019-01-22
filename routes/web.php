@@ -22,15 +22,15 @@ Route::get('/api/good_category', 'GoodCategoryController@goodCategoryApi')->name
 Route::resource('/good', 'GoodController');
 Route::get('/api/good', 'GoodController@goodApi')->name('good.api');
 
-Route::resource('/buy', 'BuyController')->except([
-	'edit', 'update', 'destroy',
-]);
-Route::get('/buy/api/vendor', 'BuyController@apiVendor')->name('buy.api.vendor');
-Route::get('/buy/api/good', 'BuyController@apiGood')->name('buy.api.good');
-Route::post('/buy/get_goods', 'BuyController@getVendorGoods')->name('buy.getVendorGoods');
-Route::post('/buy/get_good', 'BuyController@getGood')->name('buy.getGood');
-Route::post('/buy/cart', 'BuyController@cart')->name('buy.cart');
-Route::get('/api/buy', 'BuyController@buyApi')->name('buy.api');
+Route::prefix('buy')->name('buy.')->group(function () {
+	Route::get('/', 'BuyController@index')->name('index');
+	Route::post('/', 'BuyController@store')->name('store');
+	Route::get('/add', 'BuyController@add')->name('add');
+	Route::prefix('api')->name('api.')->group(function () {
+		Route::get('/vendor', 'BuyController@apiVendor')->name('vendor');
+		Route::get('/good', 'BuyController@apiGood')->name('good');
+	});
+});
 
 Route::resource('/sale', 'SaleController')->except([
 	'edit', 'update', 'destroy',
