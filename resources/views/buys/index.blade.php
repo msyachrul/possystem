@@ -125,6 +125,19 @@
 			});
 		});
 
+		$('form#buy').submit(function (event) {
+			event.preventDefault();
+
+			$.ajax({
+				url: $(this).attr('action'),
+				method: $(this).attr('method'),
+				data: $(this).serialize(),
+				success: function (response) {
+					console.log(response);
+				}
+			});
+		});
+
 		$(document).ready(function () {
 			$('select#vendor').select2({
 				ajax: {
