@@ -66,6 +66,18 @@
 
 @push('scripts')
 	<script type="text/javascript">
+		function clearSummary() {
+			let cart = $('#table-item tbody tr');
+			let totalQty = 0;
+			let total = 0;
+			$.each(cart, function () {
+				totalQty += Number($(this).find('input.qty').val());
+				total += Number($(this).find('input.subtotal').val());
+			});
+			$('#table-item tfoot .totalqty').text(totalQty);
+			$('#table-item tfoot .total').text(numberWithCommas(total));
+		}
+
 		function removeItem(barcode, name) {
 			swal({
 				'type': 'question',
@@ -79,6 +91,7 @@
 			}).then((result) => {
 				if(result.value) {
 					$('#table-item tbody tr#' + barcode).remove();
+					clearSummary();
 				}
 			});
 		}
@@ -103,15 +116,7 @@
 						row.find('span.qty').text(newQty);
 						row.find('span.subtotal').text(numberWithCommas(newTotal));
 					}
-					let cart = $('#table-item tbody tr');
-					let totalQty = 0;
-					let total = 0;
-					$.each(cart, function () {
-						totalQty += Number($(this).find('input.qty').val());
-						total += Number($(this).find('input.subtotal').val());
-					});
-					$('#table-item tfoot .totalqty').text(totalQty);
-					$('#table-item tfoot .total').text(numberWithCommas(total));
+					clearSummary();
 				},
 			});
 			$('select#good').empty();

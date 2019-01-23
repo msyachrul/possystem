@@ -11,26 +11,6 @@ use Illuminate\Http\Request;
 
 class SaleController extends Controller
 {
-    public function cart(Request $request)
-    {
-        $search = [1, $request->search];
-
-        if (strpos($request->search, '*')) {
-            $search = explode('*', $request->search);
-        }
-
-        $model = Good::where('barcode',$search[1])->orWhere('name',$search[1])->firstOrFail();
-
-        if ($model->qty < $search[0]) {
-            abort(403);
-        }
-
-        return view('sales.cart',[
-            'qty' => $search[0],
-            'model' => $model,
-        ]);   
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -41,14 +21,15 @@ class SaleController extends Controller
         return view('sales.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function add(Request $request)
     {
-        return view('sales.form');
+        $item = Good::where('barcode', $request->good)->first();
+
+        return view('sales.cart', [
+            'item' => $item,
+            'qty' => $request->qty,
+        ]);
+
     }
 
     /**
@@ -77,8 +58,13 @@ class SaleController extends Controller
         for ($i=0; $i < count($request->barcode); $i++) { 
             $good = Good::where('barcode', $request->barcode[$i])->firstOrFail();
             if ($good->qty < $request->qty[$i]) {
-                abort(403, 'Jumlah Terlalu besar!');
                 DB::rollBack();
+
+                return response()->json([
+                    'type' => 'error',
+                    'title' => 'Oops!',
+                    'text' => 'Gagal menyimpan penjualan!',
+                ]);
             }
             else {
                 $qty = $good->qty - $request->qty[$i];
@@ -91,37 +77,23 @@ class SaleController extends Controller
                     'qty' => $qty,
                 ]);
                 DB::commit();
+
+                return response()->json([
+                    'type' => 'success',
+                    'title' => 'Sukses!',
+                    'text' => 'Berhasil menyimpan penjualan!',
+                ]);
             }
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Sale  $sale
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function apiGood(Request $request)
     {
-        $saleDetails = \App\SaleDetail::where('sale_number',$id)->get();
-        return view('sales.show',compact('saleDetails'));
-    }
+        $data = Good::select(['barcode', 'name', 'cost'])->where('barcode', 'LIKE', "{$request->get('search')}%")->orWhere('name', 'LIKE', "{$request->get('search')}%")->paginate(10);
 
-    public function saleApi()
-    {
-        $model = Sale::query();
-
-        return DataTables::of($model)
-            ->addIndexColumn()
-            ->editColumn('total', function($model) {
-                return 'Rp ' . number_format($model->total);
-            })
-            ->addColumn('action', function ($model) {
-                return view('templates._action', [
-                    'model' => $model->number,
-                    'url_show' => route('sale.show', $model->number),
-                ]);
-            })
-            ->make(true);
+        return response()->json([
+            'items' => $data->toArray()['data'],
+            'pagination' => $data->nextPageUrl() ? true : false,
+        ]);
     }
 }

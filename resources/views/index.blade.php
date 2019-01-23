@@ -5,6 +5,16 @@
 @section('content')
 	<div class="row">
 		<div class="col-lg">
+			<a href="{{ route('report.stock') }}">
+				<div class="card">
+					<div class="card-body">
+						<h6 class="card-title"><i class="fa fa-shopping-bag"></i> Total Persediaan</h6>
+						<h4 class="card-text">{{ number_format($model['stock']) }} pcs</h4>
+					</div>
+				</div>
+			</a>
+		</div>
+		<div class="col-lg">
 			<a href="{{ route('report.buy') }}">
 				<div class="card text-primary">
 					<div class="card-body">
@@ -20,16 +30,6 @@
 					<div class="card-body">
 						<h6 class="card-title"><i class="fa fa-shopping-cart"></i> Penjualan {{ date('F Y') }}</h6>
 						<h4 class="card-text">Rp {{ number_format($model['sale']) }}</h4>
-					</div>
-				</div>
-			</a>
-		</div>
-		<div class="col-lg">
-			<a href="{{ route('report.stock') }}">
-				<div class="card">
-					<div class="card-body">
-						<h6 class="card-title"><i class="fa fa-shopping-bag"></i> Total Persediaan</h6>
-						<h4 class="card-text">{{ number_format($model['stock']) }} pcs</h4>
 					</div>
 				</div>
 			</a>

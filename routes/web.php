@@ -32,11 +32,14 @@ Route::prefix('buy')->name('buy.')->group(function () {
 	});
 });
 
-Route::resource('/sale', 'SaleController')->except([
-	'edit', 'update', 'destroy',
-]);
-Route::post('/sale/cart', 'SaleController@cart')->name('sale.cart');
-Route::get('/api/sale', 'SaleController@saleApi')->name('sale.api');
+Route::prefix('sale')->name('sale.')->group(function () {
+	Route::get('/', 'SaleController@index')->name('index');
+	Route::post('/', 'SaleController@store')->name('store');
+	Route::get('/add', 'SaleController@add')->name('add');
+	Route::prefix('api')->name('api.')->group(function () {
+		Route::get('/good', 'SaleController@apiGood')->name('good');
+	});
+});
 
 Route::prefix('report')->name('report.')->group(function () {
 	Route::get('/stock', 'ReportController@stock')->name('stock');
