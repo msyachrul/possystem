@@ -85,7 +85,6 @@
 
 		$('form#cart').submit(function (event) {
 			event.preventDefault();
-
 			$.ajax({
 				url: $(this).attr('action'),
 				data: $(this).serialize(),
@@ -93,48 +92,53 @@
 				success: function (response) {
 					let	barcode = $(response).attr('id'),
 						row = $('#' + barcode);
-
 					if (row.length == 0) {
 						$('#table-item tbody').append(response);
 					}
 					else {
 						let newQty = Number(row.find('input.qty').val()) + Number($(response).find('input.qty').val()),
 							newTotal = Number(row.find('input.cost').val()) * newQty;
-
 						row.find('input.qty').val(newQty);
 						row.find('input.subtotal').val(newTotal);
 						row.find('span.qty').text(newQty);
 						row.find('span.subtotal').text(numberWithCommas(newTotal));
 					}
-
 					let cart = $('#table-item tbody tr');
 					let totalQty = 0;
 					let total = 0;
-
 					$.each(cart, function () {
 						totalQty += Number($(this).find('input.qty').val());
 						total += Number($(this).find('input.subtotal').val());
 					});
-
 					$('#table-item tfoot .totalqty').text(totalQty);
 					$('#table-item tfoot .total').text(numberWithCommas(total));
-
-					$('form#cart').trigger('reset');
-					$('select#good').empty();
-				}
+				},
 			});
+			$('select#good').empty();
+			$('form#cart').trigger('reset');
 		});
 
 		$('form#buy').submit(function (event) {
 			event.preventDefault();
-
 			$.ajax({
 				url: $(this).attr('action'),
 				method: $(this).attr('method'),
 				data: $(this).serialize(),
 				success: function (response) {
-					console.log(response);
-				}
+					swal({
+						type: response.type,
+						title: response.title,
+						text: response.text,
+					});
+					if (response.type == 'success') {
+						$('select#vendor').empty();
+						$('select#good').empty();
+						$('form#cart').trigger('reset');
+						$('#table-item tbody tr').remove();
+						$('#table-item tfoot .totalqty').empty();
+						$('#table-item tfoot .total').empty();
+					}
+				},
 			});
 		});
 
@@ -160,8 +164,8 @@
 							}),
 							pagination: {
 								more: data.pagination,
-							}
-						}
+							},
+						};
 					},
 				},
 				placeholder: 'Pilih Vendor',
@@ -190,8 +194,8 @@
 							}),
 							pagination: {
 								more: data.pagination,
-							}
-						}
+							},
+						};
 					},
 				},
 				placeholder: 'Pilih Barang',

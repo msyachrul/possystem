@@ -76,14 +76,18 @@ class BuyController extends Controller
             DB::commit();
             
             return response()->json([
-                'status' => 'success',
+                'type' => 'success',
+                'title' => 'Sukses!',
+                'text' => 'Berhasil menyimpan pembelian!',
             ]);
 
         } catch (\Exception $e) {
             DB::rollback();
 
             return response()->json([
-                'status' => 'fail',
+                'type' => 'error',
+                'title' => 'Oops!',
+                'text' => 'Gagal menyimpan pembelian!',
             ]);
         }
     }

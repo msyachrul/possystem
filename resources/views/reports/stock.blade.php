@@ -14,9 +14,10 @@
 						<tr>
 							<th width="1%">#</th>
 							<th>Barang</th>
-							<th>HPP</th>
-							<th>Qty</th>
-							<th>Sub Total</th>
+							<th width="150px">Pembelian Terakhir</th>
+							<th width="110px">HPP</th>
+							<th width="70px">Qty</th>
+							<th width="150px">Sub Total</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -37,12 +38,13 @@
 			columns: [
 				{data: 'DT_RowIndex', name: 'id'},				
 				{data: 'name', name: 'name'},
+				{data: 'last_purchase', name: 'last_purchase'},
 				{data: 'cost', name: 'cost'},
 				{data: 'qty', name: 'qty'},
 				{data: 'subtotal', name: 'subtotal'},
 			],
 			columnDefs: [
-				{targets: [2, 3, 4], className: 'text-right'},
+				{targets: [2, 3, 4, 5], className: 'text-right'},
 			],
 			order: [[1, 'asc']],
 		});

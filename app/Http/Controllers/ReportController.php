@@ -36,10 +36,13 @@ class ReportController extends Controller
 
     public function apiStock()
     {
-    	$model = Good::select([DB::raw('CONCAT(barcode, " - ", name) as name'), 'cost', 'qty', DB::raw('cost * qty as subtotal')]);
+    	$model = Good::select([DB::raw('CONCAT(barcode, " - ", name) as name'), 'updated_at as last_purchase', 'cost', 'qty', DB::raw('cost * qty as subtotal')]);
 
     	return DataTables::of($model)
     		->addIndexColumn()
+            ->editColumn('last_purchase', function ($model) {
+                return date('d/m/Y', strtotime($model->last_purchase));
+            })
     		->editColumn('cost', function ($model) {
     			return 'Rp ' . number_format($model->cost);
     		})
