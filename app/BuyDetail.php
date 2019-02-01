@@ -9,7 +9,7 @@ class BuyDetail extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['cost', 'qty','buy_file_number', 'good_barcode'];
+    protected $fillable = ['cost', 'qty', 'buy_file_number', 'good_barcode'];
 
     protected $dates = ['deleted_at'];
 

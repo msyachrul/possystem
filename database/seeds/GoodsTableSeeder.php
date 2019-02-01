@@ -14,9 +14,9 @@ class GoodsTableSeeder extends Seeder
         $goods = [
         	[
         		'barcode' => '010001',
-        		'name' => 'Keripik',
+        		'name' => 'Keripik Singkong',
                 'qty' => 10,
-        		'cost' => 8900,
+        		'cost' => 7100,
         		'price' => 15000,
         		'good_category_id' => 1, 
         	],
@@ -36,6 +36,22 @@ class GoodsTableSeeder extends Seeder
         		'price' => 15000,
         		'good_category_id' => 1, 
         	],
+            [
+                'barcode' => '010004',
+                'name' => 'Keripik Keong',
+                'qty' => 10,
+                'cost' => 7600,
+                'price' => 15000,
+                'good_category_id' => 1,   
+            ],
+            [
+                'barcode' => '010005',
+                'name' => 'Keripik Kaca',
+                'qty' => 10,
+                'cost' => 7800,
+                'price' => 15000,
+                'good_category_id' => 1,   
+            ],
         ];
 
         foreach ($goods as $key => $good) {

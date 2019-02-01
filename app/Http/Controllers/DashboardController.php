@@ -16,18 +16,18 @@ class DashboardController extends Controller
     {
         $chart = new DashboardChart;
 
-        $buys = Buy::select(['created_at', 'total'])->get();
+        $buys = Buy::select(['number', 'total'])->orderBy('number', 'ASC')->get();
 
-        $date = [];
+        $number = [];
         $total = [];
 
         foreach ($buys as $buy) {
-            $date[] = date('d F', strtotime($buy->created_at));
+            $number[] = $buy->number;
             $total[] = $buy->total;
         }
 
-        $chart->labels($date);
-        $chart->dataset('Dashboard Chart', 'line', $total)->color('blue')->fill(false);
+        $chart->labels($number);
+        $chart->dataset('Total', 'line', $total)->color('blue')->fill(false);
         $chart->displayLegend(false);
 
     	$model = [
