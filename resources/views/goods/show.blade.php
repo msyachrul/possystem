@@ -15,11 +15,6 @@
 		<td>{{ $model->goodCategory->name }}</td>
 	</tr>
 	<tr>
-		<td>Vendor</td>
-		<td>:</td>
-		<td>{{ $model->vendor->name }}</td>
-	</tr>
-	<tr>
 		<td>Qty</td>
 		<td>:</td>
 		<td>{{ $model->qty }}</td>

@@ -124,12 +124,17 @@
 		});
 
 		$('form#buy').submit(function (event) {
+
+			swal.showLoading();
+
 			event.preventDefault();
+
 			$.ajax({
 				url: $(this).attr('action'),
 				method: $(this).attr('method'),
 				data: $(this).serialize(),
 				success: function (response) {
+					swal.close();
 					swal({
 						type: response.type,
 						title: response.title,

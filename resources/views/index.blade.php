@@ -45,4 +45,14 @@
 			</a>
 		</div>
 	</div>
+	<hr>
+	<div class="row">
+		<div class="col-lg">
+			{!! $chart->container() !!}
+		</div>
+	</div>
 @endsection
+
+@push('scripts')
+	{!! $chart->script() !!}
+@endpush
