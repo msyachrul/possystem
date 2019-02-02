@@ -19,7 +19,7 @@
 				<div class="card text-primary">
 					<div class="card-body">
 						<h6 class="card-title"><i class="fa fa-cart-plus"></i> Pembelian</h6>
-						<h4 class="card-text">Rp {{ number_format($model['buy']) }}</h4>
+						<h4 class="card-text">{{ $model['buy'][0] }} pcs - Rp {{ number_format($model['buy'][1]) }}</h4>
 					</div>
 				</div>
 			</a>
@@ -29,7 +29,7 @@
 				<div class="card text-success">
 					<div class="card-body">
 						<h6 class="card-title"><i class="fa fa-shopping-cart"></i> Penjualan</h6>
-						<h4 class="card-text">Rp {{ number_format($model['sale']) }}</h4>
+						<h4 class="card-text">{{ $model['sale'][0] }} pcs - Rp {{ number_format($model['sale'][1]) }}</h4>
 					</div>
 				</div>
 			</a>

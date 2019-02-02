@@ -7,7 +7,9 @@ use DB;
 use App\Views\SaleTransaction;
 use App\Good;
 use App\Sale;
+use App\SaleDetail;
 use App\Buy;
+use App\BuyDetail;
 use App\Charts\DashboardChart;
 use Faker\Factory as Faker;
 
@@ -181,13 +183,13 @@ class DashboardController extends Controller
     }
 
     public function index()
-    {        
+    {
     	$model = [
     		'stock' => Good::sum('qty'),
-            'buy' => Buy::sum('total'),
-            'sale' => Sale::sum('total'),
+            'buy' => [BuyDetail::sum('qty'), Buy::sum('total')],
+            'sale' => [SaleDetail::sum('qty'), Sale::sum('total')],
             'profit' => SaleTransaction::sum('profit_total'),
-    	];    	
+    	];
 
     	return view('index',[
             'model' => $model,
