@@ -2,10 +2,10 @@
 
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
-use App\Buy;
-use App\BuyDetails;
+use App\Sale;
+use App\SaleDetail;
 
-class BuysTableSeeder extends Seeder
+class SalesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,17 +17,16 @@ class BuysTableSeeder extends Seeder
         $faker = Faker::create();
 
         for ($i=1; $i <= 100; $i++) { 
-        	$cost = $faker->numberBetween($min = 7000, $max = 8000);
+        	$price = $faker->numberBetween($min = 14000, $max = 15000);
         	$qty = $faker->numberBetween($min = 1, $max = 10);
-        	$total = $cost * $qty;
+        	$total = $price * $qty;
 
-        	$buy = Buy::create([
-        		'number' => '022019' . $faker->date($format = 'md', $max = 'now') . sprintf('%04d',$i),
+        	$buy = Sale::create([
+        		'number' => '012019' . $faker->date($format = 'md', $max = 'now') . sprintf('%04d',$i),
         		'total' => $total,
-        		'vendor_id' => $faker->numberBetween($min = 1, $max = 10),
-        	])->buyDetails()->create([
+        	])->saleDetails()->create([
         		'good_barcode' => $faker->randomElement($array = ['010001', '010002', '010003', '010004', '010005']),
-        		'cost' => $cost,
+        		'price' => $price,
         		'qty' => $qty,
         	]);
         }
